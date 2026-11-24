@@ -1,0 +1,15 @@
+# Operating System Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary & Log files
+*.tmp
+*.temp
+*.log
+.system_generated/
+
+# Node / dependencies if any
+node_modules/
+dist/
+build/

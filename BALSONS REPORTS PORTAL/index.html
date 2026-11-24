@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS JTRWF Executive Reports &amp; Central Sync Hub | Khordha</title>
+  <!-- BEDS V2.0 Enterprise CSS -->
+  <link rel="stylesheet" href="../assets/css/beds.css">
+</head>
+<body data-portal-code="reports">
+
+  <!-- Portal Navigation Header -->
+  <header class="beds-portal-header">
+    <div class="beds-portal-brand">
+      <div class="beds-portal-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">📊</div>
+      <div>
+        <h1 class="beds-portal-title">BALSONS JTRWF EXECUTIVE REPORTS &amp; CENTRAL SYNC HUB</h1>
+        <div class="beds-portal-sub">Cross-Portal Telemetry · Cryptographic Audit Explorer · Dual Sync Health Monitor · JTRWF Khordha</div>
+      </div>
+    </div>
+    <div class="beds-portal-actions">
+      <button id="btnVerifyAuditChain" class="beds-btn beds-btn-secondary">🔒 Verify SHA-256 Audit Chain</button>
+      <button id="btnForceDualSync" class="beds-btn beds-btn-primary">⚡ Force Dual Sync (All DBs)</button>
+    </div>
+  </header>
+
+  <!-- 4 Industrial KPI Summary Cards -->
+  <section class="beds-kpi-row">
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">👥</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">On-Site Industrial Headcount</span>
+        <div class="beds-kpi-value" id="kpiReportsHeadcount">112 Riggers</div>
+        <span class="beds-kpi-trend positive">100% Cleared via 9-Discipline Engine</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">🏗️</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Erection Milestone Progress</span>
+        <div class="beds-kpi-value" id="kpiReportsProgress">68.4%</div>
+        <span class="beds-kpi-trend">Schuler 1000T Press Line Foundation</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 45, 53, 0.1); color: var(--beds-charcoal-heading);">🛡️</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Cumulative Safe Man-Hours</span>
+        <div class="beds-kpi-value" id="kpiReportsSafeHours">4,820 Hours</div>
+        <span class="beds-kpi-trend positive">LTIFR: 0.00 · Zero Reportable Incidents</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">⚡</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Central Sync Outbox Status</span>
+        <div class="beds-kpi-value" id="kpiReportsSyncStatus">100% In-Sync</div>
+        <span class="beds-kpi-trend positive">6 Databases Connected · 0 Outbox Delay</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Tab Navigation -->
+  <nav class="beds-tab-nav">
+    <button class="beds-tab-btn active" data-tab="tab-telemetry">📊 Executive Cross-Portal Telemetry</button>
+    <button class="beds-tab-btn" data-tab="tab-audit">🔒 Cryptographic Audit Log Explorer</button>
+    <button class="beds-tab-btn" data-tab="tab-synchub">⚡ Database &amp; Drive Vault Topology</button>
+  </nav>
+
+  <!-- TAB 1: EXECUTIVE TELEMETRY -->
+  <section id="tab-telemetry" class="beds-tab-pane active">
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+      <!-- Card 1: HR & Payroll Summary -->
+      <div class="beds-kpi-card" style="display: block; padding: 20px;">
+        <h3 style="margin-top: 0; font-size: 15px; color: var(--beds-charcoal-heading); display: flex; align-items: center; justify-content: space-between;">
+          <span>👥 HR &amp; Workforce Operations</span>
+          <span class="beds-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--beds-status-cleared);">HEALTHY</span>
+        </h3>
+        <p style="font-size: 13px; color: var(--beds-text-muted); margin: 0 0 12px 0;">Total Enrolled Workforce: <strong>148 Employees</strong> (86 Fixed-Wage, 62 Daily-Pay). Deterministic Payroll Run: <strong>₹24,80,000 Gross</strong>.</p>
+        <div style="display: flex; gap: 8px;">
+          <a href="../BALSONS HR MANAGER/frontend/index.html" class="beds-btn beds-btn-sm beds-btn-primary">Launch HR Portal &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Gate Entry & Security -->
+      <div class="beds-kpi-card" style="display: block; padding: 20px;">
+        <h3 style="margin-top: 0; font-size: 15px; color: var(--beds-charcoal-heading); display: flex; align-items: center; justify-content: space-between;">
+          <span>🚧 Gate Entry &amp; Turnstiles</span>
+          <span class="beds-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--beds-status-cleared);">ACTIVE</span>
+        </h3>
+        <p style="font-size: 13px; color: var(--beds-text-muted); margin: 0 0 12px 0;">Active On-Site Personnel: <strong>112 Inside Perimeter</strong>. Heavy Vehicles In Yard: <strong>14 Units</strong>. Active Gate Passes: <strong>8 Passes</strong>.</p>
+        <div style="display: flex; gap: 8px;">
+          <a href="../BALSONS GATE ENTRY MANAGER/frontend/index.html" class="beds-btn beds-btn-sm beds-btn-primary">Launch Gate Portal &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Safety & EHS -->
+      <div class="beds-kpi-card" style="display: block; padding: 20px;">
+        <h3 style="margin-top: 0; font-size: 15px; color: var(--beds-charcoal-heading); display: flex; align-items: center; justify-content: space-between;">
+          <span>🛡️ Safety, EHS &amp; PTW Governance</span>
+          <span class="beds-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--beds-status-cleared);">COMPLIANT</span>
+        </h3>
+        <p style="font-size: 13px; color: var(--beds-text-muted); margin: 0 0 12px 0;">Active High-Risk Permits: <strong>14 PTWs</strong>. Shift TBT Briefings: <strong>8 Conducted (100% Attendance)</strong>. Open CAPA: <strong>2 Actions</strong>.</p>
+        <div style="display: flex; gap: 8px;">
+          <a href="../BALSONS SAFETY MANAGER/frontend/index.html" class="beds-btn beds-btn-sm beds-btn-primary">Launch Safety Portal &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Card 4: Store & Tackles -->
+      <div class="beds-kpi-card" style="display: block; padding: 20px;">
+        <h3 style="margin-top: 0; font-size: 15px; color: var(--beds-charcoal-heading); display: flex; align-items: center; justify-content: space-between;">
+          <span>📦 Store &amp; Rigging Tackles</span>
+          <span class="beds-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--beds-status-cleared);">INDEXED</span>
+        </h3>
+        <p style="font-size: 13px; color: var(--beds-text-muted); margin: 0 0 12px 0;">Total Tackles: <strong>264 Items</strong>. Deployed in Erection Bays: <strong>182 Items</strong>. Tool Crib Available: <strong>79 Items</strong>. Quarantined: <strong>3 Items</strong>.</p>
+        <div style="display: flex; gap: 8px;">
+          <a href="../BALSONS STORE MANAGER/frontend/index.html" class="beds-btn beds-btn-sm beds-btn-primary">Launch Store Portal &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: CRYPTOGRAPHIC AUDIT LOG EXPLORER -->
+  <section id="tab-audit" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="auditSearchInput" class="beds-input" placeholder="🔍 Search Audit Event, Actor, Entity ID, or Hash...">
+      </div>
+      <div class="beds-filter-group">
+        <span class="beds-badge" style="background: rgba(16, 45, 53, 0.08); font-family: monospace; font-size: 11px;">
+          Chain Root: 0000000000000000000000000000000000000000000000000000000000000000
+        </span>
+      </div>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="auditTable">
+        <thead>
+          <tr>
+            <th>Seq #</th>
+            <th>Timestamp (IST)</th>
+            <th>Portal Domain</th>
+            <th>Action Code</th>
+            <th>Actor (User)</th>
+            <th>Target Entity ID</th>
+            <th>Previous Block Hash</th>
+            <th>Current Block Hash (SHA-256)</th>
+            <th>Verification</th>
+          </tr>
+        </thead>
+        <tbody id="auditTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 3: TOPOLOGY & SYNC HUB -->
+  <section id="tab-synchub" class="beds-tab-pane">
+    <div style="background: var(--beds-bg-surface); padding: 24px; border-radius: var(--beds-radius-lg); border: 1px solid var(--beds-border-subtle); margin-bottom: 24px;">
+      <h3 style="margin-top: 0; font-size: 16px; color: var(--beds-charcoal-heading);">Production Database &amp; Drive Vault Topology (SAM-2026)</h3>
+      
+      <div class="beds-table-container">
+        <table class="beds-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Dedicated Spreadsheet ID</th>
+              <th>Root Drive Vault ID</th>
+              <th>Sub-Vaults</th>
+              <th>Heartbeat Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HR &amp; Payroll</strong></td>
+              <td><code>1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw</code></td>
+              <td><code>1TGaAS1aB6B0W8HHrZ6SYccG0XbsdSlLt</code></td>
+              <td>12 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Gate Entry &amp; Access</strong></td>
+              <td><code>1yAuZOXc8WoC2TvTvnEWMrOyLl_50BRuJgDed_pdFT3o</code></td>
+              <td><code>1BbLIA4W-JSk2HFTKsNN1XI5Vr9WQ1bi-</code></td>
+              <td>10 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Safety, EHS &amp; PTW</strong></td>
+              <td><code>1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0</code></td>
+              <td><code>14l-IAZcb39iSeBSa9kQVUCI2lnty9cOK</code></td>
+              <td>16 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Store &amp; Tackles</strong></td>
+              <td><code>1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ</code></td>
+              <td><code>1RSSF5Ld9fEJ2VfacDp80DVrGyq4pE3HY</code></td>
+              <td>15 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Purchase &amp; POs</strong></td>
+              <td><code>1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c</code></td>
+              <td><code>1lBWPI1VJos1lx_dkPi9l-sMVhsEM1iTp</code></td>
+              <td>14 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Operations &amp; Erection</strong></td>
+              <td><code>1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E</code></td>
+              <td><code>1mNMSK9VmE5olCOtIdMzIm1HUcLEULn5g</code></td>
+              <td>10 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+            <tr>
+              <td><strong>Executive Reports / Sync</strong></td>
+              <td><code>1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ</code></td>
+              <td><code>1ZnMBMc2A9bek2i_YGqspVIJR2Q_qgXye</code></td>
+              <td>10 Sub-Vaults</td>
+              <td><span class="beds-badge beds-badge-active">🟢 ONLINE LIVE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shared Core Scripts -->
+  <script src="../assets/js/balsons-sam-auth.js"></script>
+  <script src="../assets/js/beds-portal-login.js"></script>
+  <script src="../assets/js/beds-workspace.js"></script>
+  <script src="../assets/js/beds-superadmin.js"></script>
+  <script src="../assets/js/balsons-docs-manager.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.ReportsApp) window.ReportsApp.init();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS JTRWF Commercial Purchase &amp; Vendor Manager | Khordha</title>
+  <!-- BEDS V2.0 Enterprise CSS -->
+  <link rel="stylesheet" href="../assets/css/beds.css">
+</head>
+<body data-portal-code="purchase">
+
+  <!-- Portal Navigation Header -->
+  <header class="beds-portal-header">
+    <div class="beds-portal-brand">
+      <div class="beds-portal-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">📑</div>
+      <div>
+        <h1 class="beds-portal-title">BALSONS JTRWF PURCHASE &amp; VENDOR MANAGER</h1>
+        <div class="beds-portal-sub">Procurement Requisitions (PR) · Commercial PO Generation · Vendor Master · JTRWF Khordha</div>
+      </div>
+    </div>
+    <div class="beds-portal-actions">
+      <button id="btnNewPR" class="beds-btn beds-btn-primary">+ Create Purchase Requisition (PR)</button>
+      <button id="btnNewPO" class="beds-btn beds-btn-secondary">+ Generate Commercial PO</button>
+    </div>
+  </header>
+
+  <!-- 4 Industrial KPI Summary Cards -->
+  <section class="beds-kpi-row">
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">₹</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Total Committed Procurement</span>
+        <div class="beds-kpi-value" id="kpiCommittedValue">₹1.42 Cr</div>
+        <span class="beds-kpi-trend positive">Active JTRWF erection contracts</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">🚚</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Open Purchase Orders</span>
+        <div class="beds-kpi-value" id="kpiOpenPOs">18 Active POs</div>
+        <span class="beds-kpi-trend">Material in fabrication / transit</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--beds-status-conditional);">⏳</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Pending PR Approvals</span>
+        <div class="beds-kpi-value" id="kpiPendingPRs">6 PRs</div>
+        <span class="beds-kpi-trend negative">Awaiting Commercial Director review</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 45, 53, 0.1); color: var(--beds-charcoal-heading);">🤝</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Approved Vendor Network</span>
+        <div class="beds-kpi-value" id="kpiVendors">42 Vendors</div>
+        <span class="beds-kpi-trend positive">Grade A certified suppliers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Tab Navigation -->
+  <nav class="beds-tab-nav">
+    <button class="beds-tab-btn active" data-tab="tab-pr">📑 Purchase Requisitions (PR)</button>
+    <button class="beds-tab-btn" data-tab="tab-po">📦 Commercial POs &amp; Gate Sync</button>
+  </nav>
+
+  <!-- TAB 1: PURCHASE REQUISITIONS -->
+  <section id="tab-pr" class="beds-tab-pane active">
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="prSearchInput" class="beds-input" placeholder="🔍 Search PR ID, Requestor, or Description...">
+      </div>
+      <div class="beds-filter-group">
+        <select id="prFilterStatus" class="beds-select">
+          <option value="ALL">All Requisition States</option>
+          <option value="SUBMITTED">SUBMITTED</option>
+          <option value="COMMERCIAL_REVIEW">COMMERCIAL REVIEW</option>
+          <option value="APPROVED_BY_DIRECTOR">APPROVED BY DIRECTOR</option>
+          <option value="PO_GENERATED">PO GENERATED</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="prTable">
+        <thead>
+          <tr>
+            <th>PR ID</th>
+            <th>Date</th>
+            <th>Requestor</th>
+            <th>Department</th>
+            <th>Material / Service Item Description</th>
+            <th>Qty &amp; UOM</th>
+            <th>Est. Amount (₹)</th>
+            <th>Approval Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="prTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 2: COMMERCIAL POs & GATE SYNC -->
+  <section id="tab-po" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Commercial Purchase Orders Linked to Gate Inward</h3>
+      <span class="beds-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--beds-status-cleared); font-weight: 700;">
+        ⚡ Live Synchronized with Gate Entry Portal (INW)
+      </span>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="poTable">
+        <thead>
+          <tr>
+            <th>PO Number</th>
+            <th>Linked PR</th>
+            <th>Vendor Name</th>
+            <th>Basic Amount (₹)</th>
+            <th>GST @ 18%</th>
+            <th>Total PO Value (₹)</th>
+            <th>Delivery Schedule</th>
+            <th>Payment Terms</th>
+            <th>Gate Inward Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="poTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODAL: CREATE PR -->
+  <div class="beds-modal-backdrop" id="modalNewPR">
+    <div class="beds-modal" style="max-width: 650px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">📑 New Purchase Requisition (PR)</h3>
+        <button class="beds-modal-close" data-close-modal="modalNewPR">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formNewPR">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Requesting Department *</label>
+              <select id="prDeptInput" class="beds-select">
+                <option value="MECHANICAL_ERECTION">Mechanical &amp; Heavy Erection</option>
+                <option value="RIGGING_STORE">Rigging &amp; Tool Store</option>
+                <option value="SAFETY_EHS">Safety &amp; EHS Operations</option>
+                <option value="CIVIL_FOUNDATION">Civil Foundation &amp; Grouting</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Requestor Name *</label>
+              <input type="text" id="prRequestorInput" class="beds-input" required placeholder="e.g. Prashant Muley (Site In-Charge)">
+            </div>
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Item Description &amp; Technical Specifications *</label>
+            <textarea id="prItemDescInput" class="beds-input" rows="3" required placeholder="e.g. 50 MT Alloy Steel Shackle Pins (Grade 8) and High-Tensile Foundation Anchor Bolts (M42 x 1200mm Grade 8.8)"></textarea>
+          </div>
+
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Quantity &amp; Unit of Measure (UOM) *</label>
+              <input type="text" id="prQtyInput" class="beds-input" required placeholder="e.g. 24 Nos or 15 MT">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Estimated Total Amount (₹ Excl. GST) *</label>
+              <input type="number" id="prEstValueInput" class="beds-input" required placeholder="250000" min="1000">
+            </div>
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Engineering Justification *</label>
+            <input type="text" id="prJustificationInput" class="beds-input" required placeholder="Required for Schuler 1000T Press Bed Anchor Base Plate Assembly">
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalNewPR">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Submit PR for Commercial Review</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GENERATE COMMERCIAL PO -->
+  <div class="beds-modal-backdrop" id="modalNewPO">
+    <div class="beds-modal" style="max-width: 650px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">📦 Generate Commercial Purchase Order (PO)</h3>
+        <button class="beds-modal-close" data-close-modal="modalNewPO">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formNewPO">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Select Approved PR *</label>
+              <select id="poLinkedPRInput" class="beds-select">
+                <option value="PR-2026-0041">PR-2026-0041: Foundation Anchor Bolts (₹4,80,000)</option>
+                <option value="PR-2026-0040">PR-2026-0040: Hydraulic Oil ISO VG 68 2000L (₹3,20,000)</option>
+                <option value="PR-2026-0039">PR-2026-0039: 50T Rigging Slings Replacement (₹6,50,000)</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Approved Vendor *</label>
+              <select id="poVendorInput" class="beds-select">
+                <option value="Tata Steel Ltd, Kalinganagar">Tata Steel Ltd, Kalinganagar</option>
+                <option value="Usha Martin Wire Ropes Ltd">Usha Martin Wire Ropes Ltd</option>
+                <option value="Jindal Rail Infrastructure">Jindal Rail Infrastructure</option>
+                <option value="L&amp;T Heavy Engineering">L&amp;T Heavy Engineering</option>
+                <option value="Enerpac India Pvt Ltd">Enerpac India Pvt Ltd</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Basic Value (₹ Excl. Tax) *</label>
+              <input type="number" id="poBasicValueInput" class="beds-input" required value="480000" min="1000">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Delivery Schedule Due Date *</label>
+              <input type="date" id="poDeliveryDateInput" class="beds-input" required>
+            </div>
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Commercial Payment Terms *</label>
+            <select id="poTermsInput" class="beds-select">
+              <option value="30 Days Post Site Inward &amp; Store QC Acceptance">30 Days Post Site Inward &amp; Store QC Acceptance</option>
+              <option value="20% Advance against ABG, 80% on Delivery">20% Advance against ABG, 80% on Delivery</option>
+              <option value="100% against Delivery Challan &amp; Inspection">100% against Delivery Challan &amp; Inspection</option>
+            </select>
+          </div>
+
+          <div style="background: var(--beds-bg-surface); padding: 12px; border-radius: var(--beds-radius-md); margin-top: 10px; font-size: 13px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Basic Value:</span>
+              <strong id="calcBasic">₹4,80,000</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+              <span>GST @ 18%:</span>
+              <strong id="calcGST">₹86,400</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 6px; border-top: 1px solid var(--beds-border-subtle); padding-top: 6px; color: var(--beds-teal-primary); font-size: 15px;">
+              <span>Total PO Value:</span>
+              <strong id="calcTotal">₹5,66,400</strong>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalNewPO">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Generate PO &amp; Sync to Gate Inward</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Core Scripts -->
+  <script src="../assets/js/balsons-sam-auth.js"></script>
+  <script src="../assets/js/beds-portal-login.js"></script>
+  <script src="../assets/js/beds-workspace.js"></script>
+  <script src="../assets/js/beds-superadmin.js"></script>
+  <script src="../assets/js/balsons-docs-manager.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.PurchaseApp) window.PurchaseApp.init();
+    });
+  </script>
+</body>
+</html>

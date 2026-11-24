@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS HR &amp; Dual-Wage Payroll Manager | JTRWF Khordha</title>
+  <!-- BEDS V2.0 Enterprise CSS -->
+  <link rel="stylesheet" href="../../assets/css/beds.css">
+</head>
+<body data-portal-code="hr">
+
+  <!-- Portal Navigation Header -->
+  <header class="beds-portal-header">
+    <div class="beds-portal-brand">
+      <div class="beds-portal-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">👥</div>
+      <div>
+        <h1 class="beds-portal-title">BALSONS HR &amp; DUAL-WAGE PAYROLL MANAGER</h1>
+        <div class="beds-portal-sub">26-Column Master · Daily-Wage &amp; Monthly Salaried · Advance Recovery · JTRWF Khordha</div>
+      </div>
+    </div>
+    <div class="beds-portal-actions">
+      <a href="register.html" target="_blank" class="beds-btn beds-btn-secondary">🔗 Candidate Registration Wizard</a>
+      <button id="btnOpenNewEmpModal" class="beds-btn beds-btn-primary">+ New Employee</button>
+    </div>
+  </header>
+
+  <!-- 4 Industrial KPI Summary Cards -->
+  <section class="beds-kpi-row">
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">👥</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Active Workforce</span>
+        <div class="beds-kpi-value" id="kpiActiveWorkforce">148</div>
+        <span class="beds-kpi-trend positive">112 Daily · 36 Monthly Salaried</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">⚡</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Today's Attendance</span>
+        <div class="beds-kpi-value" id="kpiAttendanceRate">94.2%</div>
+        <span class="beds-kpi-trend positive">139 Present · 6 WO · 3 Absent</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--beds-status-conditional);">💰</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Active Loan Balances</span>
+        <div class="beds-kpi-value" id="kpiLoanBalances">₹4,82,500</div>
+        <span class="beds-kpi-trend" style="color: var(--beds-text-secondary);">28 Active Loans · ₹64,000 Mo. Rec</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 45, 53, 0.1); color: var(--beds-charcoal-heading);">🔒</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Payroll Period Status</span>
+        <div class="beds-kpi-value" id="kpiPayrollStatus" style="font-size: 19px; color: var(--beds-status-conditional);">DRAFT 2026-11</div>
+        <span class="beds-kpi-trend" style="color: var(--beds-text-muted);">Dry Calculated · Awaiting PIN</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Tab Navigation -->
+  <nav class="beds-tab-nav">
+    <button class="beds-tab-btn active" data-tab="tab-employees">👥 Employee Directory (26-Col)</button>
+    <button class="beds-tab-btn" data-tab="tab-attendance">📅 Attendance &amp; Shift Register</button>
+    <button class="beds-tab-btn" data-tab="tab-advances">💰 Advances &amp; Loan Ledger</button>
+    <button class="beds-tab-btn" data-tab="tab-payroll">⚙️ Deterministic Payroll Console</button>
+  </nav>
+
+  <!-- TAB 1: EMPLOYEE MASTER DIRECTORY -->
+  <section id="tab-employees" class="beds-tab-pane active">
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="empSearchInput" class="beds-input" placeholder="🔍 Search by Name, EmpID, Trade, Department...">
+      </div>
+      <div class="beds-filter-group">
+        <select id="empWageTypeFilter" class="beds-select">
+          <option value="ALL">All Wage Types</option>
+          <option value="DAILY_PAY">Daily-Wage Only</option>
+          <option value="MONTHLY">Monthly Salaried Only</option>
+        </select>
+        <select id="empStatusFilter" class="beds-select">
+          <option value="ALL">All Statuses</option>
+          <option value="ACTIVE">Active Only</option>
+          <option value="EXITED">Exited</option>
+        </select>
+        <button id="btnExportEmpCsv" class="beds-btn beds-btn-secondary">📥 Export CSV</button>
+      </div>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="empMasterTable">
+        <thead>
+          <tr>
+            <th>Emp ID</th>
+            <th>Full Name</th>
+            <th>Department</th>
+            <th>Trade / Designation</th>
+            <th>Wage Type</th>
+            <th>Rate / CTC</th>
+            <th>Mobile</th>
+            <th>Aadhaar (Masked)</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="empTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 2: ATTENDANCE REGISTER -->
+  <section id="tab-attendance" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <div class="beds-filter-group">
+        <label class="beds-label" style="margin-right: 8px;">Month:</label>
+        <input type="month" id="attMonthSelector" class="beds-input" value="2026-11">
+        <select id="attBaySelector" class="beds-select">
+          <option value="ALL">All Workfronts / Bays</option>
+          <option value="BAY_1">Bay 1 - Press Pit</option>
+          <option value="BAY_2">Bay 2 - Gantry Line</option>
+          <option value="YARD_B">Heavy Yard B</option>
+        </select>
+      </div>
+      <div class="beds-filter-group">
+        <button id="btnMarkAllPresent" class="beds-btn beds-btn-secondary">⚡ Quick Mark Present</button>
+        <button id="btnSaveAttendance" class="beds-btn beds-btn-primary">💾 Save Shift Attendance</button>
+      </div>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="attendanceGridTable">
+        <thead>
+          <tr>
+            <th>Emp ID</th>
+            <th>Name</th>
+            <th>Wage Type</th>
+            <th>Shift</th>
+            <th>Status Code</th>
+            <th>OT Hours</th>
+            <th>Target Work Bay</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceGridBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 3: ADVANCES & LOANS -->
+  <section id="tab-advances" class="beds-tab-pane">
+    <div class="beds-alert beds-alert-amber" style="margin-bottom: 20px;">
+      <strong>⚠️ Statutory Non-Negative Net Pay Rule Active:</strong> Monthly advance recoveries are deterministically capped to <code>Gross Earnings - Statutory Deductions</code>. Deductions cannot reduce net payable below ₹0.
+    </div>
+
+    <div class="beds-filter-toolbar">
+      <div>
+        <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Active Workforce Advance Register</h3>
+      </div>
+      <button id="btnOpenIssueAdvanceModal" class="beds-btn beds-btn-primary">+ Issue New Advance</button>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="advancesTable">
+        <thead>
+          <tr>
+            <th>Advance ID</th>
+            <th>Emp ID</th>
+            <th>Name</th>
+            <th>Disbursed Date</th>
+            <th>Principal Amount</th>
+            <th>Monthly Recovery</th>
+            <th>Total Recovered</th>
+            <th>Balance</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="advancesTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 4: DETERMINISTIC PAYROLL CONSOLE -->
+  <section id="tab-payroll" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <div class="beds-filter-group">
+        <label class="beds-label" style="margin-right: 8px;">Pay Period:</label>
+        <input type="month" id="payrollPeriodSelector" class="beds-input" value="2026-11">
+        <button id="btnRunDryPayroll" class="beds-btn beds-btn-secondary">⚙️ Run Dry Calculation</button>
+      </div>
+      <div>
+        <button id="btnOpenPayrollLockModal" class="beds-btn beds-btn-primary" style="background: var(--beds-status-cleared);">🔒 Authorize &amp; Lock Pay Period</button>
+      </div>
+    </div>
+
+    <!-- Anomaly Alert Panel -->
+    <div id="payrollAnomalyPanel" style="display: none; margin-bottom: 20px;" class="beds-alert beds-alert-red">
+      <strong>⚠️ Payroll Anomaly / Exception Alert:</strong>
+      <ul id="payrollAnomalyList" style="margin: 6px 0 0 16px; padding: 0;"></ul>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="payrollRegisterTable">
+        <thead>
+          <tr>
+            <th>Emp ID</th>
+            <th>Full Name</th>
+            <th>Wage Type</th>
+            <th>Present</th>
+            <th>Payable</th>
+            <th>Base Earned</th>
+            <th>OT Pay</th>
+            <th>Gross Pay</th>
+            <th>Advance Ded</th>
+            <th>PF (12%)</th>
+            <th>ESIC (0.75%)</th>
+            <th>PT</th>
+            <th>Net Payable</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="payrollTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODAL: 360° WORKFORCE DOSSIER -->
+  <div class="beds-modal-backdrop" id="modalDossier">
+    <div class="beds-modal" style="max-width: 760px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">360° Workforce Profile Dossier</h3>
+        <button class="beds-modal-close" data-close-modal="modalDossier">&times;</button>
+      </div>
+      <div class="beds-modal-body" id="dossierContent">
+        <!-- Dynamically rendered via app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NEW EMPLOYEE ONBOARDING -->
+  <div class="beds-modal-backdrop" id="modalNewEmployee">
+    <div class="beds-modal" style="max-width: 680px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">Administrative Direct Enrolment (26-Column)</h3>
+        <button class="beds-modal-close" data-close-modal="modalNewEmployee">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formNewEmployee">
+          <div class="beds-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div>
+              <label class="beds-label">Full Name *</label>
+              <input type="text" id="newEmpFullName" class="beds-input" required placeholder="e.g. Ramesh Swain">
+            </div>
+            <div>
+              <label class="beds-label">Father's Name *</label>
+              <input type="text" id="newEmpFatherName" class="beds-input" required placeholder="e.g. Kailash Swain">
+            </div>
+            <div>
+              <label class="beds-label">Date of Birth * (Age &ge; 18)</label>
+              <input type="date" id="newEmpDOB" class="beds-input" required>
+            </div>
+            <div>
+              <label class="beds-label">Blood Group *</label>
+              <select id="newEmpBloodGroup" class="beds-select" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div>
+              <label class="beds-label">10-Digit Mobile *</label>
+              <input type="tel" id="newEmpMobile" class="beds-input" pattern="[6-9][0-9]{9}" required placeholder="9876543210">
+            </div>
+            <div>
+              <label class="beds-label">Department *</label>
+              <select id="newEmpDept" class="beds-select">
+                <option value="Heavy Rigging & Lift">Heavy Rigging &amp; Lift</option>
+                <option value="Mechanical Erection">Mechanical Erection</option>
+                <option value="Safety & EHS">Safety &amp; EHS</option>
+                <option value="Machine Shop">Machine Shop</option>
+                <option value="Store & Inventory">Store &amp; Inventory</option>
+              </select>
+            </div>
+            <div>
+              <label class="beds-label">Trade / Designation *</label>
+              <input type="text" id="newEmpTrade" class="beds-input" required placeholder="e.g. Master Rigger">
+            </div>
+            <div>
+              <label class="beds-label">Wage Classification *</label>
+              <select id="newEmpWageType" class="beds-select">
+                <option value="DAILY_PAY">Daily-Wage Technician (att.present basis)</option>
+                <option value="MONTHLY">Monthly Salaried (Present+WO+PL)</option>
+              </select>
+            </div>
+            <div>
+              <label class="beds-label">Daily Rate (INR) or Monthly CTC *</label>
+              <input type="number" id="newEmpRate" class="beds-input" required placeholder="e.g. 950 or 45000">
+            </div>
+            <div>
+              <label class="beds-label">12-Digit Aadhaar No *</label>
+              <input type="text" id="newEmpAadhaar" class="beds-input" pattern="\d{12}" required placeholder="12-digit number">
+            </div>
+          </div>
+          <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalNewEmployee">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Create Employee Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PAYROLL PIN LOCK AUTHORIZATION -->
+  <div class="beds-modal-backdrop" id="modalPayrollLock">
+    <div class="beds-modal" style="max-width: 440px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">Authorize &amp; Lock Payroll Run</h3>
+        <button class="beds-modal-close" data-close-modal="modalPayrollLock">&times;</button>
+      </div>
+      <div class="beds-modal-body" style="text-align: center;">
+        <p style="font-size: 13.5px; color: var(--beds-text-secondary); margin-bottom: 16px;">
+          Locking this period will freeze all attendance, generate official salary records, and commit advance recoveries. Enter authorized HR Head PIN:
+        </p>
+        <input type="password" id="payrollAuthPin" class="beds-input" maxlength="4" placeholder="••••" style="text-align: center; font-size: 24px; letter-spacing: 0.2em; width: 140px; margin: 0 auto 16px auto; display: block;">
+        <div style="display: flex; justify-content: center; gap: 10px;">
+          <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalPayrollLock">Cancel</button>
+          <button type="button" id="btnConfirmLockPayroll" class="beds-btn beds-btn-primary" style="background: var(--beds-status-cleared);">Confirm &amp; Lock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Core Scripts -->
+  <script src="../../assets/js/balsons-sam-auth.js"></script>
+  <script src="../../assets/js/beds-portal-login.js"></script>
+  <script src="../../assets/js/beds-workspace.js"></script>
+  <script src="../../assets/js/beds-superadmin.js"></script>
+  <script src="../../assets/js/balsons-docs-manager.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.HRApp) window.HRApp.init();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS JTRWF Safety, EHS &amp; PTW Governance Portal | Khordha</title>
+  <!-- BEDS V2.0 Enterprise CSS -->
+  <link rel="stylesheet" href="../../assets/css/beds.css">
+</head>
+<body data-portal-code="safety">
+
+  <!-- Portal Navigation Header -->
+  <header class="beds-portal-header">
+    <div class="beds-portal-brand">
+      <div class="beds-portal-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">🛡️</div>
+      <div>
+        <h1 class="beds-portal-title">BALSONS JTRWF SAFETY, EHS &amp; PTW GOVERNANCE PORTAL</h1>
+        <div class="beds-portal-sub">10 Statutory Permit Categories · Daily Toolbox Talks (TBT) · Incident CAPA Tracker · JTRWF Khordha</div>
+      </div>
+    </div>
+    <div class="beds-portal-actions">
+      <button id="btnQuickReportNearMiss" class="beds-btn beds-btn-danger" style="background: var(--beds-alert-red); color: #FFFFFF; font-weight: 700;">⚠️ Report Near-Miss / Hazard</button>
+      <button id="btnNewPTW" class="beds-btn beds-btn-primary">+ Issue New PTW</button>
+    </div>
+  </header>
+
+  <!-- 4 Industrial KPI Summary Cards -->
+  <section class="beds-kpi-row">
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">🛡️</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Active Permits To Work</span>
+        <div class="beds-kpi-value" id="kpiActivePTW">14 Active</div>
+        <span class="beds-kpi-trend positive">6 Hot Work · 4 Height Work · 4 Lift</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">⏱️</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Safe Working Hours (No LTI)</span>
+        <div class="beds-kpi-value" id="kpiSafeHours">4,820 Hours</div>
+        <span class="beds-kpi-trend positive">Zero Lost Time Injuries in 2026</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 45, 53, 0.1); color: var(--beds-charcoal-heading);">📋</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Daily Toolbox Talks</span>
+        <div class="beds-kpi-value" id="kpiConductedTBT">8 Conducted</div>
+        <span class="beds-kpi-trend positive">100% Shift Attendance Logged</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--beds-status-conditional);">⚠️</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Open Corrective Actions (CAPA)</span>
+        <div class="beds-kpi-value" id="kpiOpenCAPA">2 Pending</div>
+        <span class="beds-kpi-trend negative">Due within 24 hours</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Tab Navigation -->
+  <nav class="beds-tab-nav">
+    <button class="beds-tab-btn active" data-tab="tab-permits">🛡️ Permit To Work (PTW) Studio</button>
+    <button class="beds-tab-btn" data-tab="tab-tbt">📋 Daily Toolbox Talks (TBT)</button>
+    <button class="beds-tab-btn" data-tab="tab-incidents">⚠️ Hazard &amp; Incident CAPA</button>
+  </nav>
+
+  <!-- TAB 1: PTW STUDIO -->
+  <section id="tab-permits" class="beds-tab-pane active">
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="ptwSearchInput" class="beds-input" placeholder="🔍 Search PTW ID, Work Bay, or Supervisor...">
+      </div>
+      <div class="beds-filter-group">
+        <select id="ptwFilterType" class="beds-select">
+          <option value="ALL">All 10 Permit Categories</option>
+          <option value="PTW-HOT">PTW-HOT: Hot Work &amp; Welding</option>
+          <option value="PTW-HGT">PTW-HGT: Work at Height (&gt;1.8m)</option>
+          <option value="PTW-LIFT">PTW-LIFT: Heavy Critical Lift (&gt;50T)</option>
+          <option value="PTW-CONF">PTW-CONF: Confined Space &amp; Pit</option>
+          <option value="PTW-ELEC">PTW-ELEC: Electrical Isolation</option>
+          <option value="PTW-EXCAV">PTW-EXCAV: Deep Excavation</option>
+          <option value="PTW-RAD">PTW-RAD: Radiography &amp; NDT</option>
+          <option value="PTW-CHEM">PTW-CHEM: Chemicals Handling</option>
+          <option value="PTW-DEMO">PTW-DEMO: Demolition</option>
+          <option value="PTW-GEN">PTW-GEN: General Maintenance</option>
+        </select>
+        <select id="ptwFilterStatus" class="beds-select">
+          <option value="ALL">All Lifecycle States</option>
+          <option value="DRAFT">DRAFT</option>
+          <option value="SUBMITTED">SUBMITTED</option>
+          <option value="VERIFIED_BY_SAFETY">VERIFIED BY SAFETY</option>
+          <option value="AUTHORISED">AUTHORISED</option>
+          <option value="ISSUED">ISSUED (ACTIVE)</option>
+          <option value="CLOSED">CLOSED</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- State Machine Pipeline Visual Helper -->
+    <div style="background: var(--beds-bg-surface); padding: 12px 18px; border-radius: var(--beds-radius-md); border: 1px solid var(--beds-border-subtle); margin-bottom: 16px; font-size: 12px; display: flex; align-items: center; justify-content: space-between; overflow-x: auto;">
+      <span style="font-weight: 700; color: var(--beds-charcoal-heading);">Statutory 6-Stage Lifecycle:</span>
+      <span class="beds-badge" style="background: rgba(16, 45, 53, 0.08);">1. DRAFT</span> &rarr;
+      <span class="beds-badge" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">2. SUBMITTED</span> &rarr;
+      <span class="beds-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--beds-status-conditional);">3. VERIFIED BY SAFETY</span> &rarr;
+      <span class="beds-badge" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">4. AUTHORISED (HOD)</span> &rarr;
+      <span class="beds-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--beds-status-cleared); font-weight: 800;">5. ISSUED (ACTIVE)</span> &rarr;
+      <span class="beds-badge" style="background: rgba(100, 116, 139, 0.1); color: #64748B;">6. CLOSED</span>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="ptwTable">
+        <thead>
+          <tr>
+            <th>Permit ID</th>
+            <th>Type</th>
+            <th>Work Bay / Area</th>
+            <th>Authorized Supervisor</th>
+            <th>Valid From - To</th>
+            <th>Gas / Hazard Check</th>
+            <th>Lifecycle State</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ptwTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 2: DAILY TOOLBOX TALKS -->
+  <section id="tab-tbt" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Shift Safety Briefings &amp; Daily TBT Log</h3>
+      <button id="btnOpenTBTModal" class="beds-btn beds-btn-primary">+ Log Shift TBT Briefing</button>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="tbtTable">
+        <thead>
+          <tr>
+            <th>TBT ID</th>
+            <th>Date &amp; Shift</th>
+            <th>Work Bay</th>
+            <th>Briefing Topic</th>
+            <th>Supervisor</th>
+            <th>Headcount Present</th>
+            <th>Digital Sign-off</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tbtTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 3: HAZARD & INCIDENT CAPA -->
+  <section id="tab-incidents" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Near-Miss, Hazard Observation &amp; CAPA Registry</h3>
+      <button id="btnOpenIncidentModal" class="beds-btn beds-btn-danger" style="background: var(--beds-alert-red); color: #FFFFFF;">+ Report Incident / Hazard</button>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="incidentTable">
+        <thead>
+          <tr>
+            <th>Record ID</th>
+            <th>Date / Time</th>
+            <th>Bay / Location</th>
+            <th>Category</th>
+            <th>Severity</th>
+            <th>Description &amp; Immediate Containment</th>
+            <th>CAPA Action &amp; Owner</th>
+            <th>Target Date</th>
+            <th>CAPA Status</th>
+          </tr>
+        </thead>
+        <tbody id="incidentTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODAL: ISSUE NEW PTW -->
+  <div class="beds-modal-backdrop" id="modalNewPTW">
+    <div class="beds-modal" style="max-width: 650px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">🛡️ Issue Statutory Permit To Work (PTW)</h3>
+        <button class="beds-modal-close" data-close-modal="modalNewPTW">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formNewPTW">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Permit Category *</label>
+              <select id="ptwTypeInput" class="beds-select">
+                <option value="PTW-HOT">PTW-HOT: Hot Work &amp; Welding</option>
+                <option value="PTW-HGT">PTW-HGT: Work at Height (&gt;1.8m)</option>
+                <option value="PTW-LIFT">PTW-LIFT: Heavy Critical Lift (&gt;50T)</option>
+                <option value="PTW-CONF">PTW-CONF: Confined Space &amp; Pit</option>
+                <option value="PTW-ELEC">PTW-ELEC: Electrical Isolation</option>
+                <option value="PTW-EXCAV">PTW-EXCAV: Deep Foundation Excavation</option>
+                <option value="PTW-RAD">PTW-RAD: Radiography &amp; NDT</option>
+                <option value="PTW-CHEM">PTW-CHEM: Chemicals Handling</option>
+                <option value="PTW-DEMO">PTW-DEMO: Demolition</option>
+                <option value="PTW-GEN">PTW-GEN: General Maintenance</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Work Bay / Erection Area *</label>
+              <select id="ptwBayInput" class="beds-select">
+                <option value="BAY_A_SCHULER_PRESS">Bay A - Schuler 1000T Press Bed</option>
+                <option value="BAY_B_WHEEL_AXLE">Bay B - Railwheel Axle Line</option>
+                <option value="BAY_C_FABRICATION">Bay C - Heavy Fabrication Shop</option>
+                <option value="CENTRAL_YARD">Central Yard / Crane Mobilization</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Authorized Work Supervisor *</label>
+              <input type="text" id="ptwSupervisorInput" class="beds-input" required placeholder="e.g. Rajesh Sharma (EMP-2026-0001)">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Estimated Manpower *</label>
+              <input type="number" id="ptwManpowerInput" class="beds-input" required value="6" min="1" max="50">
+            </div>
+          </div>
+
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Permit Valid From *</label>
+              <input type="datetime-local" id="ptwValidFromInput" class="beds-input" required>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Permit Valid To (Max 12 Hrs) *</label>
+              <input type="datetime-local" id="ptwValidToInput" class="beds-input" required>
+            </div>
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Gas Test / Specialized Hazard Reading (LEL / O2 / PPM)</label>
+            <input type="text" id="ptwGasTestInput" class="beds-input" placeholder="e.g. O2: 20.9%, LEL: 0%, CO: 0 PPM (Passed)">
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Scope of Work &amp; Control Measures *</label>
+            <textarea id="ptwScopeInput" class="beds-input" rows="3" required placeholder="Detailed task scope, isolations in place, fire extinguisher stationed, 100% tie-off..."></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalNewPTW">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Initiate Permit (DRAFT &rarr; SUBMIT)</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LOG TBT BRIEFING -->
+  <div class="beds-modal-backdrop" id="modalNewTBT">
+    <div class="beds-modal" style="max-width: 550px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">📋 Log Daily Shift Toolbox Talk (TBT)</h3>
+        <button class="beds-modal-close" data-close-modal="modalNewTBT">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formNewTBT">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Date &amp; Shift *</label>
+              <select id="tbtShiftInput" class="beds-select">
+                <option value="Morning Shift (06:00 - 14:00)">Morning Shift (06:00 - 14:00)</option>
+                <option value="General Shift (08:00 - 17:00)">General Shift (08:00 - 17:00)</option>
+                <option value="Evening Shift (14:00 - 22:00)">Evening Shift (14:00 - 22:00)</option>
+                <option value="Night Shift (22:00 - 06:00)">Night Shift (22:00 - 06:00)</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Work Bay *</label>
+              <select id="tbtBayInput" class="beds-select">
+                <option value="BAY_A_SCHULER_PRESS">Bay A - Schuler Press</option>
+                <option value="BAY_B_WHEEL_AXLE">Bay B - Wheel Axle Line</option>
+                <option value="BAY_C_FABRICATION">Bay C - Heavy Fabrication</option>
+                <option value="CENTRAL_YARD">Central Yard / Staging</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Briefing Topic *</label>
+            <input type="text" id="tbtTopicInput" class="beds-input" required placeholder="e.g. Slings &amp; Shackle Pre-Use Check Before 320 MT Lift">
+          </div>
+
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Conducting Supervisor *</label>
+              <input type="text" id="tbtSupervisorInput" class="beds-input" required placeholder="Amit Verma (Rigging Supervisor)">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Attending Riggers / Workers *</label>
+              <input type="number" id="tbtAttendanceInput" class="beds-input" required value="16" min="1">
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalNewTBT">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Record TBT &amp; Sign Off</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: REPORT INCIDENT / HAZARD -->
+  <div class="beds-modal-backdrop" id="modalNewIncident">
+    <div class="beds-modal" style="max-width: 600px;">
+      <div class="beds-modal-header" style="background: var(--beds-alert-red); color: #FFFFFF;">
+        <h3 class="beds-modal-title" style="color: #FFFFFF;">⚠️ Report Hazard Observation / Near-Miss</h3>
+        <button class="beds-modal-close" data-close-modal="modalNewIncident" style="color: #FFFFFF;">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formNewIncident">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Incident Classification *</label>
+              <select id="incCategoryInput" class="beds-select">
+                <option value="NEAR_MISS">Near-Miss (No Injury / Property Safe)</option>
+                <option value="UNSAFE_ACT">Unsafe Act Observed</option>
+                <option value="UNSAFE_CONDITION">Unsafe Condition / Defect</option>
+                <option value="ENVIRONMENT_SPILL">Environmental / Hydraulic Spill</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Severity Level *</label>
+              <select id="incSeverityInput" class="beds-select">
+                <option value="LOW">Low (Local housekeeping / minor)</option>
+                <option value="MEDIUM">Medium (Requires supervisor review)</option>
+                <option value="HIGH">High (Immediate work suspension)</option>
+                <option value="CRITICAL">Critical (Life / Structural hazard)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Location / Work Bay *</label>
+            <input type="text" id="incLocationInput" class="beds-input" required placeholder="e.g. Bay A Pit Excavation North Wall">
+          </div>
+
+          <div class="beds-form-group">
+            <label class="beds-label">Description &amp; Immediate Action Taken *</label>
+            <textarea id="incDescInput" class="beds-input" rows="3" required placeholder="What was observed and what immediate containment was put in place?"></textarea>
+          </div>
+
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Corrective &amp; Preventive Action (CAPA) *</label>
+              <input type="text" id="incCAPAInput" class="beds-input" required placeholder="e.g. Replace defective sling pin and re-certify tag">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Target Completion Date *</label>
+              <input type="date" id="incTargetDateInput" class="beds-input" required>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalNewIncident">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-danger" style="background: var(--beds-alert-red); color: #FFFFFF;">Log Incident &amp; Assign CAPA</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Core Scripts -->
+  <script src="../../assets/js/balsons-sam-auth.js"></script>
+  <script src="../../assets/js/beds-portal-login.js"></script>
+  <script src="../../assets/js/beds-workspace.js"></script>
+  <script src="../../assets/js/beds-superadmin.js"></script>
+  <script src="../../assets/js/balsons-docs-manager.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.SafetyApp) window.SafetyApp.init();
+    });
+  </script>
+</body>
+</html>

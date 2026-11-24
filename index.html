@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS MULTI-PORTAL ENTERPRISE WORKSPACE | JTRWF Khordha</title>
+  <!-- BEDS V2.0 Enterprise Design System -->
+  <link rel="stylesheet" href="assets/css/beds.css">
+  <style>
+    .launcher-hero {
+      background: linear-gradient(135deg, var(--beds-charcoal-heading) 0%, var(--beds-charcoal-dark) 100%);
+      color: var(--beds-text-inverse);
+      padding: 40px 24px 32px;
+      text-align: center;
+      border-bottom: 3px solid var(--beds-teal-primary);
+      margin-bottom: 32px;
+    }
+    .launcher-logo {
+      height: 64px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    .launcher-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px 0;
+      color: #FFFFFF;
+    }
+    .launcher-slogan {
+      font-size: 14px;
+      font-style: italic;
+      color: #E2E8F0;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .launcher-project-tag {
+      display: inline-block;
+      background: rgba(0, 151, 178, 0.2);
+      border: 1px solid var(--beds-teal-primary);
+      color: #E0F2FE;
+      padding: 4px 14px;
+      border-radius: 16px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .portal-card {
+      background: var(--beds-bg-surface);
+      border: 1px solid var(--beds-border-subtle);
+      border-radius: var(--beds-radius-lg);
+      padding: 24px;
+      box-shadow: var(--beds-shadow-md);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .portal-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--beds-shadow-lg);
+      border-color: var(--beds-teal-primary);
+    }
+    .portal-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--beds-border-subtle);
+      padding-bottom: 14px;
+    }
+    .portal-card-icon {
+      font-size: 28px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--beds-radius-md);
+      background: var(--beds-teal-surface);
+    }
+    .portal-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--beds-charcoal-heading);
+      margin: 0;
+    }
+    .portal-card-sub {
+      font-size: 11.5px;
+      color: var(--beds-text-secondary);
+      margin: 2px 0 0 0;
+    }
+    .portal-metrics-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      flex-grow: 1;
+    }
+    .portal-metrics-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px dashed var(--beds-border-subtle);
+    }
+    .portal-metrics-item:last-child {
+      border-bottom: none;
+    }
+    .portal-metrics-label {
+      color: var(--beds-text-secondary);
+    }
+    .portal-metrics-val {
+      font-weight: 700;
+      color: var(--beds-text-primary);
+      font-family: var(--beds-font-mono, monospace);
+    }
+    .btn-launch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--beds-teal-primary);
+      color: #FFFFFF;
+      padding: 12px 16px;
+      border-radius: var(--beds-radius-md);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      box-sizing: border-box;
+    }
+    .btn-launch:hover {
+      background: var(--beds-teal-hover);
+    }
+  </style>
+</head>
+<body data-portal-code="launcher">
+
+  <!-- Hero Header -->
+  <header class="launcher-hero">
+    <img src="assets/images/balsons-logo.png" alt="BALSONS Logo" class="launcher-logo">
+    <h1 class="launcher-title">BALSONS HEAVY LIFT &amp; SHIFT</h1>
+    <div class="launcher-slogan">&ldquo;Difficult we do easily, impossible takes little time.&rdquo;</div>
+    <div class="launcher-project-tag">JTRWF Khordha Railwheel Factory Enterprise Workspace</div>
+  </header>
+
+  <!-- Main Multi-Portal Grid -->
+  <main class="launcher-grid">
+
+    <!-- Card 1: HR & Dual-Wage Payroll -->
+    <article class="portal-card">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon">👥</div>
+          <div>
+            <h2 class="portal-card-title">HR &amp; Dual-Wage Payroll</h2>
+            <div class="portal-card-sub">26-Col Master · Daily &amp; Monthly Pay</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Active Workforce:</span>
+            <span class="portal-metrics-val">148 Personnel</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Daily Wage Technicians:</span>
+            <span class="portal-metrics-val">112 Daily Workers</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Active Advance Balance:</span>
+            <span class="portal-metrics-val">₹4,82,500</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Current Payroll Status:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-conditional);">DRAFT 2026-11</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS HR MANAGER/frontend/index.html" class="btn-launch">Open HR Manager &raquo;</a>
+    </article>
+
+    <!-- Card 2: Gate Entry & Site Access -->
+    <article class="portal-card">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon">🚧</div>
+          <div>
+            <h2 class="portal-card-title">Gate Entry &amp; Site Access</h2>
+            <div class="portal-card-sub">9-Discipline Engine · Turnstiles · RGP/NRGP</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Personnel Inside Site:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-cleared);">112 On Site</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Heavy Equipment in Yard:</span>
+            <span class="portal-metrics-val">14 Units Mobilized</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Inward Consignments:</span>
+            <span class="portal-metrics-val">6 Trucks (PO/DC)</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Active Gate Passes:</span>
+            <span class="portal-metrics-val">8 Passes (6 RGP)</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS GATE ENTRY MANAGER/frontend/index.html" class="btn-launch">Open Gate Entry &raquo;</a>
+    </article>
+
+    <!-- Card 3: Safety, EHS & PTW -->
+    <article class="portal-card">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon">🛡️</div>
+          <div>
+            <h2 class="portal-card-title">Safety, EHS &amp; PTW Manager</h2>
+            <div class="portal-card-sub">10 Statutory Permit Types · TBT Briefings</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Active Permits (PTW):</span>
+            <span class="portal-metrics-val" style="color: var(--beds-teal-primary);">14 Active Permits</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Safe Hours Without LTI:</span>
+            <span class="portal-metrics-val">4,820 Hours (Zero LTI)</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Daily Shift TBTs:</span>
+            <span class="portal-metrics-val">8 Shifts Logged</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Open Corrective Actions:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-conditional);">2 CAPA Due</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS SAFETY MANAGER/frontend/index.html" class="btn-launch">Open Safety Portal &raquo;</a>
+    </article>
+
+    <!-- Card 4: Store & Rigging Tackle -->
+    <article class="portal-card">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon">📦</div>
+          <div>
+            <h2 class="portal-card-title">Store &amp; Rigging Tackles</h2>
+            <div class="portal-card-sub">264 Rigging Items · Offline IndexedDB</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Total Rigging Inventory:</span>
+            <span class="portal-metrics-val">264 Tackles</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Deployed in Workfronts:</span>
+            <span class="portal-metrics-val">182 Items Checked Out</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Available in Crib:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-cleared);">79 Calibrated</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Quarantined / Defective:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-blocked);">3 Items (Red Tag)</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS STORE MANAGER/frontend/index.html" class="btn-launch">Open Store Manager &raquo;</a>
+    </article>
+
+    <!-- Card 5: Purchase & Commercial Procurement -->
+    <article class="portal-card">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon">📑</div>
+          <div>
+            <h2 class="portal-card-title">Purchase &amp; Vendor Manager</h2>
+            <div class="portal-card-sub">PRs · RFQs · Commercial POs &amp; GRN</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Committed Procurement:</span>
+            <span class="portal-metrics-val">₹1.42 Cr</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Open Purchase Orders:</span>
+            <span class="portal-metrics-val">18 Active POs</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Pending Requisitions:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-conditional);">6 PRs Awaiting</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Approved Vendor Pool:</span>
+            <span class="portal-metrics-val">42 Certified Vendors</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS PURCHASE MANAGER/index.html" class="btn-launch">Open Purchase Manager &raquo;</a>
+    </article>
+
+    <!-- Card 6: Operations & Heavy Erection -->
+    <article class="portal-card">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon">🏗️</div>
+          <div>
+            <h2 class="portal-card-title">Operations &amp; Heavy Lift</h2>
+            <div class="portal-card-sub">Schuler Press Line · 600 MT Crawler</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Schuler Press Progress:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-cleared);">68.4% Milestone 3</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Active Erection Bays:</span>
+            <span class="portal-metrics-val">8 Workfronts</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Mobilized Heavy Cranes:</span>
+            <span class="portal-metrics-val">6 Cranes (600T, 250T)</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Daily Erection Tonnage:</span>
+            <span class="portal-metrics-val">142 MT Positioned</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS OPERATIONS MANAGER/index.html" class="btn-launch">Open Operations &raquo;</a>
+    </article>
+
+  </main>
+
+  <!-- Core Scripts -->
+  <script src="assets/js/balsons-sam-auth.js"></script>
+  <script src="assets/js/beds-portal-login.js"></script>
+  <script src="assets/js/beds-workspace.js"></script>
+  <script src="assets/js/beds-superadmin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+    });
+  </script>
+</body>
+</html>

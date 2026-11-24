@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Self-Onboarding Wizard | BALSONS Heavy Lift &amp; Shift</title>
+  <link rel="stylesheet" href="../../assets/css/beds.css">
+  <style>
+    body {
+      background: var(--beds-bg-canvas);
+      padding: 32px 16px;
+      font-family: var(--beds-font-primary, sans-serif);
+    }
+    .wizard-container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--beds-bg-surface);
+      border-radius: var(--beds-radius-lg);
+      border: 1px solid var(--beds-border-subtle);
+      box-shadow: var(--beds-shadow-lg);
+      overflow: hidden;
+    }
+    .wizard-header {
+      background: var(--beds-charcoal-heading);
+      color: #FFFFFF;
+      padding: 24px;
+      text-align: center;
+      border-bottom: 3px solid var(--beds-teal-primary);
+    }
+    .wizard-steps-indicator {
+      display: flex;
+      background: var(--beds-bg-surface-alt);
+      border-bottom: 1px solid var(--beds-border-subtle);
+    }
+    .wizard-step-chip {
+      flex: 1;
+      padding: 12px 6px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--beds-text-muted);
+      border-bottom: 2px solid transparent;
+      text-transform: uppercase;
+    }
+    .wizard-step-chip.active {
+      color: var(--beds-teal-primary);
+      border-bottom-color: var(--beds-teal-primary);
+      background: #FFFFFF;
+    }
+    .wizard-step-chip.completed {
+      color: var(--beds-status-cleared);
+    }
+    .wizard-body {
+      padding: 32px 28px;
+    }
+    .step-pane {
+      display: none;
+    }
+    .step-pane.active {
+      display: block;
+    }
+    .wizard-footer {
+      padding: 16px 28px;
+      background: var(--beds-bg-surface-alt);
+      border-top: 1px solid var(--beds-border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wizard-container">
+    <div class="wizard-header">
+      <h1 style="font-size: 20px; font-weight: 800; margin: 0 0 4px 0;">BALSONS CANDIDATE SELF-ONBOARDING WIZARD</h1>
+      <div style="font-size: 12px; color: #E2E8F0;">कर्मचारी स्वयं-पंजीकरण पोर्टल · 6-Step Statutory Onboarding Registration</div>
+    </div>
+
+    <!-- 6-Step Visual Indicator -->
+    <div class="wizard-steps-indicator">
+      <div class="wizard-step-chip active" id="chip-1">1. Demographics</div>
+      <div class="wizard-step-chip" id="chip-2">2. Address</div>
+      <div class="wizard-step-chip" id="chip-3">3. Trade</div>
+      <div class="wizard-step-chip" id="chip-4">4. Statutory</div>
+      <div class="wizard-step-chip" id="chip-5">5. Documents</div>
+      <div class="wizard-step-chip" id="chip-6">6. Declaration</div>
+    </div>
+
+    <form id="wizardForm">
+      <div class="wizard-body">
+        
+        <!-- STEP 1: DEMOGRAPHICS -->
+        <div class="step-pane active" id="step-1">
+          <h2 style="font-size: 16px; margin-top: 0; color: var(--beds-charcoal-heading);">Step 1: Personal Demographics (व्यक्तिगत विवरण)</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div>
+              <label class="beds-label">Full Name / पूरा नाम *</label>
+              <input type="text" id="wFullName" class="beds-input" required placeholder="Candidate Full Name">
+            </div>
+            <div>
+              <label class="beds-label">Father's Name / पिता का नाम *</label>
+              <input type="text" id="wFatherName" class="beds-input" required placeholder="Father's Name">
+            </div>
+            <div>
+              <label class="beds-label">Date of Birth / जन्म तिथि * (Age &ge; 18)</label>
+              <input type="date" id="wDOB" class="beds-input" required>
+            </div>
+            <div>
+              <label class="beds-label">Blood Group / रक्त समूह *</label>
+              <select id="wBloodGroup" class="beds-select" required>
+                <option value="A+">A+</option>
+                <option value="B+">B+</option>
+                <option value="O+">O+</option>
+                <option value="AB+">AB+</option>
+                <option value="A-">A-</option>
+                <option value="B-">B-</option>
+                <option value="O-">O-</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div>
+              <label class="beds-label">10-Digit Mobile / मोबाइल नंबर *</label>
+              <input type="tel" id="wMobile" class="beds-input" pattern="[6-9][0-9]{9}" required placeholder="10-digit Indian Mobile">
+            </div>
+            <div>
+              <label class="beds-label">Emergency Phone / आपातकालीन संपर्क *</label>
+              <input type="tel" id="wEmergencyPhone" class="beds-input" required placeholder="Emergency Contact Number">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: ADDRESSES -->
+        <div class="step-pane" id="step-2">
+          <h2 style="font-size: 16px; margin-top: 0; color: var(--beds-charcoal-heading);">Step 2: Residential Addresses (पते का विवरण)</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <label class="beds-label">Permanent Residential Address (with 6-Digit PIN) *</label>
+              <textarea id="wPermanentAddr" class="beds-input" rows="3" required placeholder="Village/Town, Police Station, District, State, PIN Code"></textarea>
+            </div>
+            <div>
+              <label class="beds-label">Site Camp / Local Quarters Address (Khordha/Bhubaneswar)</label>
+              <textarea id="wCampAddr" class="beds-input" rows="2" placeholder="Local Camp details"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: TRADE -->
+        <div class="step-pane" id="step-3">
+          <h2 style="font-size: 16px; margin-top: 0; color: var(--beds-charcoal-heading);">Step 3: Technical Trade &amp; Specialization (कार्य एवं ट्रेड)</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div>
+              <label class="beds-label">Department / विभाग *</label>
+              <select id="wDept" class="beds-select" required>
+                <option value="Heavy Rigging & Lift">Heavy Rigging &amp; Lift</option>
+                <option value="Mechanical Erection">Mechanical Erection</option>
+                <option value="Safety & EHS">Safety &amp; EHS</option>
+                <option value="Machine Shop">Machine Shop</option>
+                <option value="Store & Inventory">Store &amp; Inventory</option>
+              </select>
+            </div>
+            <div>
+              <label class="beds-label">Trade / Technical Skill *</label>
+              <input type="text" id="wTrade" class="beds-input" required placeholder="e.g. Master Rigger, Welder, Crane Operator">
+            </div>
+            <div>
+              <label class="beds-label">Years of Industrial Experience</label>
+              <input type="number" id="wExperience" class="beds-input" min="0" placeholder="e.g. 5">
+            </div>
+            <div>
+              <label class="beds-label">Height Work Vertigo Cleared? *</label>
+              <select id="wVertigoStatus" class="beds-select">
+                <option value="YES">Yes - Medical Height Clearance Verified</option>
+                <option value="NO">No - Ground Operations Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: STATUTORY -->
+        <div class="step-pane" id="step-4">
+          <h2 style="font-size: 16px; margin-top: 0; color: var(--beds-charcoal-heading);">Step 4: Statutory Credentials (वैधानिक पहचान एवं बैंक खाता)</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div>
+              <label class="beds-label">12-Digit Aadhaar Number / आधार नंबर *</label>
+              <input type="text" id="wAadhaar" class="beds-input" pattern="\d{12}" required placeholder="12-digit UIDAI number">
+            </div>
+            <div>
+              <label class="beds-label">PAN Number / पैन कार्ड नंबर</label>
+              <input type="text" id="wPAN" class="beds-input" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="ABCDE1234F">
+            </div>
+            <div>
+              <label class="beds-label">Bank Account Number / बैंक खाता संख्या *</label>
+              <input type="text" id="wBankAcc" class="beds-input" required placeholder="Bank Account Number">
+            </div>
+            <div>
+              <label class="beds-label">Bank 11-Digit IFSC Code *</label>
+              <input type="text" id="wBankIFSC" class="beds-input" pattern="[A-Z]{4}0[A-Z0-9]{6}" required placeholder="SBIN0001234">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: DOCUMENT UPLOADS -->
+        <div class="step-pane" id="step-5">
+          <h2 style="font-size: 16px; margin-top: 0; color: var(--beds-charcoal-heading);">Step 5: KYC Documents &amp; Portrait (दस्तावेज़ अपलोड)</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <label class="beds-label">Candidate Passport Portrait (CR80 ID Standard) *</label>
+              <input type="file" id="wFilePhoto" class="beds-input" accept="image/*" required>
+            </div>
+            <div>
+              <label class="beds-label">Aadhaar Card Scan (Front &amp; Back PDF or JPG) *</label>
+              <input type="file" id="wFileAadhaar" class="beds-input" accept=".pdf,image/*" required>
+            </div>
+            <div>
+              <label class="beds-label">Bank Passbook / Cancelled Cheque Scan *</label>
+              <input type="file" id="wFileBank" class="beds-input" accept=".pdf,image/*" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 6: DECLARATION -->
+        <div class="step-pane" id="step-6">
+          <h2 style="font-size: 16px; margin-top: 0; color: var(--beds-charcoal-heading);">Step 6: Declaration &amp; Digital Confirmation (सत्यापन)</h2>
+          <div style="background: var(--beds-bg-surface-alt); padding: 16px; border-radius: var(--beds-radius-md); font-size: 12.5px; line-height: 1.6; margin-bottom: 16px;">
+            <p style="margin-top: 0;"><strong>Undertaking:</strong> I hereby declare that all particulars submitted above are authentic and accurate. I agree to adhere strictly to all site safety regulations, wear mandatory 5-point PPE at all times, and comply with BALSONS Heavy Lift &amp; Shift governance rules at JTRWF Khordha plant.</p>
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; cursor: pointer;">
+              <input type="checkbox" id="wAgreeCheck" required> I Accept the Terms &amp; Conditions (मैं नियमों से सहमत हूँ)
+            </label>
+          </div>
+          <div id="wSuccessBanner" style="display: none;" class="beds-alert beds-alert-green">
+            <strong>✅ Registration Submitted Successfully!</strong><br>
+            Your Temporary Application Reference Code: <strong id="wRefCode" style="font-family: monospace; font-size: 15px;">REG-2026-0042</strong>.<br>
+            Please present this code to the Site HR Administrator for statutory verification.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="wizard-footer">
+        <button type="button" id="btnWizPrev" class="beds-btn beds-btn-secondary" style="visibility: hidden;">&laquo; Previous</button>
+        <button type="button" id="btnWizNext" class="beds-btn beds-btn-primary">Next Step &raquo;</button>
+        <button type="submit" id="btnWizSubmit" class="beds-btn beds-btn-primary" style="display: none; background: var(--beds-status-cleared);">Submit Enrolment Application</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    var currentStep = 1;
+    var totalSteps = 6;
+
+    var btnPrev = document.getElementById('btnWizPrev');
+    var btnNext = document.getElementById('btnWizNext');
+    var btnSubmit = document.getElementById('btnWizSubmit');
+
+    function updateStep(step) {
+      for (var i = 1; i <= totalSteps; i++) {
+        var pane = document.getElementById('step-' + i);
+        var chip = document.getElementById('chip-' + i);
+        if (pane) pane.classList.toggle('active', i === step);
+        if (chip) {
+          chip.classList.toggle('active', i === step);
+          if (i < step) chip.classList.add('completed');
+          else chip.classList.remove('completed');
+        }
+      }
+      btnPrev.style.visibility = step === 1 ? 'hidden' : 'visible';
+      if (step === totalSteps) {
+        btnNext.style.display = 'none';
+        btnSubmit.style.display = 'inline-block';
+      } else {
+        btnNext.style.display = 'inline-block';
+        btnSubmit.style.display = 'none';
+      }
+    }
+
+    btnNext.addEventListener('click', function() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        updateStep(currentStep);
+      }
+    });
+
+    btnPrev.addEventListener('click', function() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateStep(currentStep);
+      }
+    });
+
+    document.getElementById('wizardForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var refCode = 'REG-2026-' + ('0000' + Math.floor(Math.random() * 9000 + 1000)).slice(-4);
+      document.getElementById('wRefCode').textContent = refCode;
+      document.getElementById('wSuccessBanner').style.display = 'block';
+      btnSubmit.disabled = true;
+    });
+  </script>
+</body>
+</html>

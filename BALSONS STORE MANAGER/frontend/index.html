@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS JTRWF Store &amp; Rigging Tackle Manager | Khordha</title>
+  <!-- BEDS V2.0 Enterprise CSS -->
+  <link rel="stylesheet" href="../../assets/css/beds.css">
+</head>
+<body data-portal-code="store">
+
+  <!-- Portal Navigation Header -->
+  <header class="beds-portal-header">
+    <div class="beds-portal-brand">
+      <div class="beds-portal-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">📦</div>
+      <div>
+        <h1 class="beds-portal-title">BALSONS JTRWF STORE &amp; RIGGING TACKLE MANAGER</h1>
+        <div class="beds-portal-sub">264-Item Heavy Tackle Master · Offline-First Tool Checkout &amp; Return · Form 11 Calibration · JTRWF Khordha</div>
+      </div>
+    </div>
+    <div class="beds-portal-actions">
+      <button id="btnQuickIssue" class="beds-btn beds-btn-primary">⚡ Scan &amp; Issue Tackle</button>
+      <button id="btnAddTackle" class="beds-btn beds-btn-secondary">+ Add Catalog Item</button>
+    </div>
+  </header>
+
+  <!-- 4 Industrial KPI Summary Cards -->
+  <section class="beds-kpi-row">
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 45, 53, 0.1); color: var(--beds-charcoal-heading);">📦</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Total Managed Rigging Tackles</span>
+        <div class="beds-kpi-value" id="kpiTotalTackles">264 Items</div>
+        <span class="beds-kpi-trend positive">LF 41 · HF 155 · SH 32 · SP 18 · PU 18</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--beds-status-conditional);">⚡</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Currently Deployed in Plant</span>
+        <div class="beds-kpi-value" id="kpiDeployedTackles">182 Items</div>
+        <span class="beds-kpi-trend">Checked out across 4 erection bays</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">✅</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Available in Tool Crib</span>
+        <div class="beds-kpi-value" id="kpiAvailableTackles">79 Items</div>
+        <span class="beds-kpi-trend positive">Inspected, calibrated, ready for issue</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(230, 70, 70, 0.1); color: var(--beds-alert-red);">🔴</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Quarantined / Defect Flagged</span>
+        <div class="beds-kpi-value" id="kpiQuarantineTackles">3 Items</div>
+        <span class="beds-kpi-trend negative">Tag Color: RED (Do Not Use)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Tab Navigation -->
+  <nav class="beds-tab-nav">
+    <button class="beds-tab-btn active" data-tab="tab-catalog">📦 264-Item Tackle Master Catalog</button>
+    <button class="beds-tab-btn" data-tab="tab-issue">⚡ Tool Issue &amp; Return Ledger</button>
+    <button class="beds-tab-btn" data-tab="tab-calibration">📑 Form 11 &amp; Calibration Registry</button>
+  </nav>
+
+  <!-- TAB 1: 264-ITEM TACKLE CATALOG -->
+  <section id="tab-catalog" class="beds-tab-pane active">
+    <!-- Category Sub-filter pills -->
+    <div style="display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px;">
+      <button class="beds-btn beds-btn-sm beds-btn-primary" data-category="ALL" id="catBtnAll">All Categories (264)</button>
+      <button class="beds-btn beds-btn-sm beds-btn-secondary" data-category="LF">LF: Lifting Jacks &amp; Cylinders (41)</button>
+      <button class="beds-btn beds-btn-sm beds-btn-secondary" data-category="HF">HF: Slings &amp; Wire Ropes (155)</button>
+      <button class="beds-btn beds-btn-sm beds-btn-secondary" data-category="SH">SH: Bow &amp; D-Shackles (32)</button>
+      <button class="beds-btn beds-btn-sm beds-btn-secondary" data-category="SP">SP: Spreader Beams (18)</button>
+      <button class="beds-btn beds-btn-sm beds-btn-secondary" data-category="PU">PU: Hydraulic Pullers (18)</button>
+    </div>
+
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="catalogSearchInput" class="beds-input" placeholder="🔍 Search Asset ID, Description, Serial No, or SWL...">
+      </div>
+      <div class="beds-filter-group">
+        <select id="catalogStatusFilter" class="beds-select">
+          <option value="ALL">All Statuses</option>
+          <option value="AVAILABLE">Available in Crib</option>
+          <option value="ISSUED">Issued / Deployed</option>
+          <option value="QUARANTINE">Quarantined / Damaged</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="catalogTable">
+        <thead>
+          <tr>
+            <th>Asset ID</th>
+            <th>Equipment Description</th>
+            <th>Category</th>
+            <th>Safe Working Load (SWL)</th>
+            <th>Serial Number</th>
+            <th>Calib Expiry</th>
+            <th>Tag Color</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="catalogTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 2: TOOL ISSUE & RETURN LEDGER -->
+  <section id="tab-issue" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="issueScanInput" class="beds-input" placeholder="⚡ Barcode Scan Tackle Asset ID to Quick Issue/Return...">
+      </div>
+      <button id="btnOpenIssueModal" class="beds-btn beds-btn-primary">+ Issue Tackle to Employee</button>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="issueLedgerTable">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Tackle Asset ID</th>
+            <th>Item Description</th>
+            <th>Borrower ID</th>
+            <th>Borrower Name</th>
+            <th>Target Work Bay</th>
+            <th>Issue Timestamp</th>
+            <th>Expected Return</th>
+            <th>Return Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="issueLedgerTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 3: FORM 11 & CALIBRATION REGISTRY -->
+  <section id="tab-calibration" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Statutory Form 11 / Third Party Inspection (TPI) Registry</h3>
+      <span class="beds-badge beds-badge-active">Odisha Factories Rules 1950 Form 11 Compliant</span>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="calibTable">
+        <thead>
+          <tr>
+            <th>Asset ID</th>
+            <th>Description</th>
+            <th>Rated SWL</th>
+            <th>Form 11 Cert No</th>
+            <th>TPI Agency / Competent Person</th>
+            <th>Proof Load Applied</th>
+            <th>Last Test Date</th>
+            <th>Next Due Date</th>
+            <th>Certificate</th>
+            <th>Validity Status</th>
+          </tr>
+        </thead>
+        <tbody id="calibTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODAL: ISSUE TACKLE -->
+  <div class="beds-modal-backdrop" id="modalIssueTackle">
+    <div class="beds-modal" style="max-width: 550px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">⚡ Issue Tackle to Employee</h3>
+        <button class="beds-modal-close" data-close-modal="modalIssueTackle">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formIssueTackle">
+          <div class="beds-form-group">
+            <label class="beds-label">Tackle Asset ID *</label>
+            <input type="text" id="issueAssetIdInput" class="beds-input" required placeholder="e.g. BAL-LF-HYJ-001 or BAL-SH-0012">
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Borrower Employee ID *</label>
+              <input type="text" id="issueEmpIdInput" class="beds-input" required placeholder="EMP-2026-0001">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Borrower Name</label>
+              <input type="text" id="issueEmpNameInput" class="beds-input" placeholder="Rajesh Sharma (Rigging Lead)">
+            </div>
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Work Bay / Erection Area *</label>
+              <select id="issueBayInput" class="beds-select">
+                <option value="BAY_A_SCHULER_PRESS">Bay A - Schuler 1000T Press</option>
+                <option value="BAY_B_WHEEL_AXLE">Bay B - Wheel Axle Line</option>
+                <option value="BAY_C_FABRICATION">Bay C - Heavy Fabrication</option>
+                <option value="CENTRAL_YARD">Central Staging Yard</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Expected Return Date *</label>
+              <input type="date" id="issueReturnDateInput" class="beds-input" required>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalIssueTackle">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Confirm Issue &amp; Print Slip</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD TACKLE TO CATALOG -->
+  <div class="beds-modal-backdrop" id="modalAddTackle">
+    <div class="beds-modal" style="max-width: 600px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">📦 Add New Rigging Tackle to Catalog</h3>
+        <button class="beds-modal-close" data-close-modal="modalAddTackle">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formAddTackle">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Category Code *</label>
+              <select id="addCatInput" class="beds-select">
+                <option value="LF">LF: Lifting Jacks &amp; Hydraulic Cylinders</option>
+                <option value="HF">HF: Wire Ropes &amp; Slings</option>
+                <option value="SH">SH: Bow &amp; D-Shackles</option>
+                <option value="SP">SP: Spreader Beams &amp; Equalizers</option>
+                <option value="PU">PU: Hydraulic Pullers &amp; Power Packs</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Asset Tag ID *</label>
+              <input type="text" id="addAssetIdInput" class="beds-input" required placeholder="BAL-LF-HYJ-0042">
+            </div>
+          </div>
+          <div class="beds-form-group">
+            <label class="beds-label">Equipment Description *</label>
+            <input type="text" id="addDescInput" class="beds-input" required placeholder="e.g. 150 MT Heavy Hydraulic Cylinder (Enerpac CLRG-1506)">
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Safe Working Load (SWL) *</label>
+              <input type="text" id="addSWLInput" class="beds-input" required placeholder="e.g. 150 MT SWL">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Serial Number *</label>
+              <input type="text" id="addSerialInput" class="beds-input" required placeholder="ENP-99214-2025">
+            </div>
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Form 11 Expiry Date *</label>
+              <input type="date" id="addCalibExpiryInput" class="beds-input" required>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Initial Inspection Tag</label>
+              <select id="addTagInput" class="beds-select">
+                <option value="GREEN">GREEN (Pass - Fit for Use)</option>
+                <option value="AMBER">AMBER (Conditional)</option>
+                <option value="RED">RED (Quarantine - Do Not Use)</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalAddTackle">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Add Item to Catalog</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Core Scripts -->
+  <script src="../../assets/js/balsons-sam-auth.js"></script>
+  <script src="../../assets/js/beds-portal-login.js"></script>
+  <script src="../../assets/js/beds-workspace.js"></script>
+  <script src="../../assets/js/beds-superadmin.js"></script>
+  <script src="../../assets/js/balsons-docs-manager.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.StoreApp) window.StoreApp.init();
+    });
+  </script>
+</body>
+</html>

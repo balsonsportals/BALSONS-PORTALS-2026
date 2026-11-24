@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALSONS JTRWF Gate Entry &amp; Site Access Portal | Khordha</title>
+  <!-- BEDS V2.0 Enterprise CSS -->
+  <link rel="stylesheet" href="../../assets/css/beds.css">
+</head>
+<body data-portal-code="gate">
+
+  <!-- Portal Navigation Header -->
+  <header class="beds-portal-header">
+    <div class="beds-portal-brand">
+      <div class="beds-portal-icon" style="background: rgba(230, 70, 70, 0.1); color: var(--beds-alert-red);">🚧</div>
+      <div>
+        <h1 class="beds-portal-title">BALSONS JTRWF GATE ENTRY &amp; SITE ACCESS PORTAL</h1>
+        <div class="beds-portal-sub">9-Discipline Compliance Pre-Clearance · Turnstile Access · RGP/NRGP Passes · JTRWF Khordha</div>
+      </div>
+    </div>
+    <div class="beds-portal-actions">
+      <button id="btnEmergencyMuster" class="beds-btn beds-btn-danger" style="background: var(--beds-alert-red); color: #FFFFFF; font-weight: 800;">🚨 Emergency Evacuation Muster</button>
+    </div>
+  </header>
+
+  <!-- 4 Industrial KPI Summary Cards -->
+  <section class="beds-kpi-row">
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--beds-status-cleared);">🟢</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Personnel On-Site</span>
+        <div class="beds-kpi-value" id="kpiOnSiteHeadcount">112</div>
+        <span class="beds-kpi-trend positive">84 Riggers · 18 Eng · 10 Drivers</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(0, 151, 178, 0.1); color: var(--beds-teal-primary);">🏗️</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Heavy Equipment in Yard</span>
+        <div class="beds-kpi-value" id="kpiEquipmentInYard">14 Units</div>
+        <span class="beds-kpi-trend">600T Crawler, SPMT, Booms</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--beds-status-conditional);">🚚</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Pending Inward Deliveries</span>
+        <div class="beds-kpi-value" id="kpiPendingDeliveries">6 Trucks</div>
+        <span class="beds-kpi-trend">Steel Coils, Wheel Axles</span>
+      </div>
+    </div>
+
+    <div class="beds-kpi-card">
+      <div class="beds-kpi-icon" style="background: rgba(16, 45, 53, 0.1); color: var(--beds-charcoal-heading);">📑</div>
+      <div class="beds-kpi-content">
+        <span class="beds-kpi-label">Active Gate Passes</span>
+        <div class="beds-kpi-value" id="kpiActivePasses">8 Passes</div>
+        <span class="beds-kpi-trend">6 RGP Returnable · 2 NRGP</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Tab Navigation -->
+  <nav class="beds-tab-nav">
+    <button class="beds-tab-btn active" data-tab="tab-dashboard">📡 Live Gate Stream &amp; Radar</button>
+    <button class="beds-tab-btn" data-tab="tab-clearance">🛡️ 9-Discipline Pre-Clearance</button>
+    <button class="beds-tab-btn" data-tab="tab-inward">📦 Material Inward (PO / DC)</button>
+    <button class="beds-tab-btn" data-tab="tab-gatepass">📑 Gate Pass Center (RGP / NRGP)</button>
+  </nav>
+
+  <!-- TAB 1: LIVE GATE STREAM -->
+  <section id="tab-dashboard" class="beds-tab-pane active">
+    <div class="beds-filter-toolbar">
+      <div class="beds-search-box">
+        <input type="text" id="gateScanInput" class="beds-input" placeholder="🔍 Scan Badge Barcode, QR Code, or Vehicle Number...">
+      </div>
+      <div class="beds-filter-group">
+        <select id="gateFilterDirection" class="beds-select">
+          <option value="ALL">All Directions</option>
+          <option value="IN">Entry Only (IN)</option>
+          <option value="OUT">Exit Only (OUT)</option>
+        </select>
+        <button id="btnManualSwipe" class="beds-btn beds-btn-primary">⚡ Log Gate Movement</button>
+      </div>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="gateStreamTable">
+        <thead>
+          <tr>
+            <th>Timestamp (IST)</th>
+            <th>Subject ID</th>
+            <th>Subject Name / Vehicle</th>
+            <th>Category</th>
+            <th>Direction</th>
+            <th>Gate Lane</th>
+            <th>Allocated Bay</th>
+            <th>Clearance Status</th>
+          </tr>
+        </thead>
+        <tbody id="gateStreamBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 2: 9-DISCIPLINE PRE-CLEARANCE EVALUATOR -->
+  <section id="tab-clearance" class="beds-tab-pane">
+    <div style="background: var(--beds-bg-surface); padding: 24px; border-radius: var(--beds-radius-lg); border: 1px solid var(--beds-border-subtle); margin-bottom: 24px;">
+      <h3 style="margin-top: 0; font-size: 16px; color: var(--beds-charcoal-heading);">Automated Compliance Evaluation Engine</h3>
+      <div style="display: flex; gap: 12px; align-items: flex-end; margin-bottom: 20px;">
+        <div style="flex: 1;">
+          <label class="beds-label">Enter Subject ID (Personnel EMP-ID or Vehicle Reg No) *</label>
+          <input type="text" id="evalSubjectId" class="beds-input" value="EMP-2026-0001" placeholder="EMP-2026-XXXX or OD-02-XX-XXXX">
+        </div>
+        <div style="width: 200px;">
+          <label class="beds-label">Declared Activity *</label>
+          <select id="evalActivity" class="beds-select">
+            <option value="HEIGHT_WORK">Height Work (> 1.8m)</option>
+            <option value="RIGGING">Heavy Crane Rigging</option>
+            <option value="GROUND_FIT">Ground Fitting / Erection</option>
+            <option value="TRANSPORT">Material Transportation</option>
+          </select>
+        </div>
+        <button id="btnTriggerEvaluation" class="beds-btn beds-btn-primary">⚡ Evaluate Compliance</button>
+      </div>
+
+      <!-- Result Banner -->
+      <div id="evalResultBanner" class="beds-alert beds-alert-green" style="font-size: 14px; margin-bottom: 20px;">
+        <strong>🟢 STATUS: CLEARED FOR SITE ACCESS</strong> · Validity: 24 Hours · All 9 Statutory Disciplines Satisfied.
+      </div>
+
+      <!-- 9 Discipline Indicator Lights -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;" id="disciplineGrid">
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">1. IDENTITY VALIDITY</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (Photo ID Active)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">2. POLICE VERIFICATION</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (PVC Verified)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">3. MEDICAL FITNESS</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (Form-32 Valid)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">4. VERTIGO CLEARANCE</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (Height Cleared)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">5. STATUTORY INSURANCE</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (Policy Active)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">6. TRADE COMPETENCY</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (Master Rigger)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">7. PPE COMPLIANCE</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (5-Point Verified)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">8. WORK DOCUMENTATION</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (RA/JSA Active)</div>
+        </div>
+        <div class="beds-kpi-card" style="padding: 12px;">
+          <div style="font-size: 11.5px; font-weight: 700;">9. EQUIPMENT FITNESS</div>
+          <div style="color: var(--beds-status-cleared); font-weight: 700; font-size: 13px;">🟢 PASS (Form 11 / PUC)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: MATERIAL INWARD REGISTER -->
+  <section id="tab-inward" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Inward Delivery Challan &amp; Consignment Receipts</h3>
+      <button id="btnOpenInwardModal" class="beds-btn beds-btn-primary">+ Log Inward Truck</button>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="inwardTable">
+        <thead>
+          <tr>
+            <th>Inward ID</th>
+            <th>Type</th>
+            <th>PO Number</th>
+            <th>Challan No (DC)</th>
+            <th>Vendor Name</th>
+            <th>Vehicle No</th>
+            <th>Material Category</th>
+            <th>Declared Qty</th>
+            <th>Unloading Bay</th>
+            <th>Store Status</th>
+          </tr>
+        </thead>
+        <tbody id="inwardTableBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TAB 4: GATE PASS CENTER (RGP / NRGP) -->
+  <section id="tab-gatepass" class="beds-tab-pane">
+    <div class="beds-filter-toolbar">
+      <h3 style="margin: 0; font-size: 15px; color: var(--beds-charcoal-heading);">Returnable (RGP) &amp; Non-Returnable (NRGP) Passes</h3>
+      <button id="btnOpenGatePassModal" class="beds-btn beds-btn-primary">+ Create Gate Pass</button>
+    </div>
+
+    <div class="beds-table-container">
+      <table class="beds-table" id="gatePassTable">
+        <thead>
+          <tr>
+            <th>Pass ID</th>
+            <th>Type</th>
+            <th>Consignee</th>
+            <th>Vehicle No</th>
+            <th>Items</th>
+            <th>Return Due Date</th>
+            <th>Approval</th>
+            <th>Gate Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="gatePassBody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODAL: MANUAL GATE SWIPE / MOVEMENT -->
+  <div class="beds-modal-backdrop" id="modalManualSwipe">
+    <div class="beds-modal" style="max-width: 500px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">⚡ Log Gate Movement</h3>
+        <button class="beds-modal-close" data-close-modal="modalManualSwipe">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formManualSwipe">
+          <div class="beds-form-group">
+            <label class="beds-label">Subject ID (Badge / Reg No) *</label>
+            <input type="text" id="swipeSubjectId" class="beds-input" required placeholder="e.g. EMP-2026-0001 or OD-02-AX-9999">
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Movement Direction *</label>
+              <select id="swipeDirection" class="beds-select">
+                <option value="IN">Entry (IN)</option>
+                <option value="OUT">Exit (OUT)</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Gate Lane *</label>
+              <select id="swipeLane" class="beds-select">
+                <option value="TURNSTILE_01">Turnstile Lane 1 (North)</option>
+                <option value="TURNSTILE_02">Turnstile Lane 2 (South)</option>
+                <option value="VEHICLE_GATE_01">Heavy Vehicle Gate 1</option>
+                <option value="VEHICLE_GATE_02">Light Vehicle Gate 2</option>
+              </select>
+            </div>
+          </div>
+          <div class="beds-form-group">
+            <label class="beds-label">Allocated Work Bay *</label>
+            <select id="swipeBay" class="beds-select">
+              <option value="BAY_A_SCHULER_PRESS">Bay A - Schuler 1000T Press Bed</option>
+              <option value="BAY_B_WHEEL_AXLE">Bay B - Railwheel Axle Line</option>
+              <option value="BAY_C_FABRICATION">Bay C - Heavy Fabrication Shop</option>
+              <option value="CENTRAL_YARD">Central Yard / Staging</option>
+            </select>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalManualSwipe">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Record Movement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LOG INWARD TRUCK / DELIVERY -->
+  <div class="beds-modal-backdrop" id="modalInward">
+    <div class="beds-modal" style="max-width: 600px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">📦 Log Inward Truck Consignment</h3>
+        <button class="beds-modal-close" data-close-modal="modalInward">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formInward">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Consignment Type *</label>
+              <select id="inwardType" class="beds-select">
+                <option value="PO_DELIVERY">PO Delivery (Purchase Order)</option>
+                <option value="DC_RETURN">DC Return (Delivery Challan)</option>
+                <option value="SAMPLE_INSPECTION">Sample / Third-Party Consignment</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">PO / DC Number *</label>
+              <input type="text" id="inwardDocNo" class="beds-input" required placeholder="PO-2026-XXXX or DC-XXXX">
+            </div>
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Vendor / Supplier Name *</label>
+              <input type="text" id="inwardVendor" class="beds-input" required placeholder="e.g. Tata Steel / Jindal Rail">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Vehicle Registration No *</label>
+              <input type="text" id="inwardVehicle" class="beds-input" required placeholder="OD-02-XX-XXXX">
+            </div>
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Material Category *</label>
+              <select id="inwardCategory" class="beds-select">
+                <option value="STEEL_PLATES">Structural Steel Plates &amp; Beams</option>
+                <option value="CRANE_RIGGING">Crane Wire Ropes &amp; Slings</option>
+                <option value="RAIL_AXLES">Forged Wheel Axles</option>
+                <option value="HYDRAULIC_OIL">Industrial Oils &amp; Consumables</option>
+                <option value="PPE_SAFETY">Safety Harnesses &amp; Helmets</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Declared Quantity *</label>
+              <input type="text" id="inwardQty" class="beds-input" required placeholder="e.g. 24 MT or 50 Nos">
+            </div>
+          </div>
+          <div class="beds-form-group">
+            <label class="beds-label">Unloading Work Bay *</label>
+            <select id="inwardBay" class="beds-select">
+              <option value="CENTRAL_YARD">Central Yard Unloading Bay</option>
+              <option value="BAY_A_SCHULER">Bay A - Heavy Erection Dock</option>
+              <option value="BAY_B_AXLE">Bay B - Axle Inward Dock</option>
+              <option value="MAIN_STORE">Main Mechanical Store</option>
+            </select>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalInward">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Submit Inward Receipt</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE GATE PASS (RGP / NRGP) -->
+  <div class="beds-modal-backdrop" id="modalGatePass">
+    <div class="beds-modal" style="max-width: 600px;">
+      <div class="beds-modal-header">
+        <h3 class="beds-modal-title">📑 Issue Gate Pass (RGP / NRGP)</h3>
+        <button class="beds-modal-close" data-close-modal="modalGatePass">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <form id="formGatePass">
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Pass Type *</label>
+              <select id="passType" class="beds-select">
+                <option value="RGP">RGP (Returnable Gate Pass)</option>
+                <option value="NRGP">NRGP (Non-Returnable Gate Pass)</option>
+              </select>
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Consignee / Destination *</label>
+              <input type="text" id="passConsignee" class="beds-input" required placeholder="e.g. L&amp;T Workshop, Cuttack">
+            </div>
+          </div>
+          <div class="beds-form-row">
+            <div class="beds-form-group">
+              <label class="beds-label">Vehicle Registration No *</label>
+              <input type="text" id="passVehicle" class="beds-input" required placeholder="OD-33-YY-1234">
+            </div>
+            <div class="beds-form-group">
+              <label class="beds-label">Return Due Date (For RGP)</label>
+              <input type="date" id="passReturnDate" class="beds-input">
+            </div>
+          </div>
+          <div class="beds-form-group">
+            <label class="beds-label">Material / Tackle Item Description &amp; Qty *</label>
+            <textarea id="passItems" class="beds-input" rows="3" required placeholder="e.g. 2x 50T Bow Shackles (SH-32-01, 02), 1x 100T Spreader Beam"></textarea>
+          </div>
+          <div class="beds-form-group">
+            <label class="beds-label">Dispatch Purpose / Reason *</label>
+            <input type="text" id="passReason" class="beds-input" required placeholder="e.g. NDT Recalibration / Proof Load Testing">
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="beds-btn beds-btn-secondary" data-close-modal="modalGatePass">Cancel</button>
+            <button type="submit" class="beds-btn beds-btn-primary">Generate Pass &amp; Route for Approval</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EMERGENCY EVACUATION MUSTER -->
+  <div class="beds-modal-backdrop" id="modalMuster">
+    <div class="beds-modal" style="max-width: 720px;">
+      <div class="beds-modal-header" style="background: var(--beds-alert-red); color: #FFFFFF;">
+        <h3 class="beds-modal-title" style="color: #FFFFFF;">🚨 Emergency Evacuation Headcount Muster</h3>
+        <button class="beds-modal-close" data-close-modal="modalMuster" style="color: #FFFFFF;">&times;</button>
+      </div>
+      <div class="beds-modal-body">
+        <div style="background: var(--beds-alert-surface); padding: 14px; border-radius: 6px; margin-bottom: 16px;">
+          <strong>Designated Assembly Point:</strong> Main North Gate Plaza Assembly Zone 1<br>
+          <strong>Total Active Personnel Inside Perimeter:</strong> <span id="musterCount" style="font-size: 18px; font-weight: 800; color: var(--beds-alert-red);">112</span>
+        </div>
+        <div class="beds-table-container" style="max-height: 360px;">
+          <table class="beds-table" id="musterRosterTable">
+            <thead>
+              <tr>
+                <th>Subject ID</th>
+                <th>Name / Trade</th>
+                <th>Allocated Work Bay</th>
+                <th>Entry Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="musterRosterBody">
+              <!-- Dynamically populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Core Scripts -->
+  <script src="../../assets/js/balsons-sam-auth.js"></script>
+  <script src="../../assets/js/beds-portal-login.js"></script>
+  <script src="../../assets/js/beds-workspace.js"></script>
+  <script src="../../assets/js/beds-superadmin.js"></script>
+  <script src="../../assets/js/balsons-docs-manager.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
+      if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.GateApp) window.GateApp.init();
+    });
+  </script>
+</body>
+</html>
