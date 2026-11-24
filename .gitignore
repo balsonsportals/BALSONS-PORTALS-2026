@@ -8,6 +8,9 @@ Desktop.ini
 *.temp
 *.log
 .system_generated/
+__pycache__/
+*.pyc
+
 
 # Node / dependencies if any
 node_modules/
