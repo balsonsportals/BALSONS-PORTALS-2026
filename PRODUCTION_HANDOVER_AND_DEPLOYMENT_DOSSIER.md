@@ -3,7 +3,7 @@
 
 **Client Anchor:** Jupiter Tatravagonka Railwheel Factory (JTRWF), Khordha, Odisha  
 **Operating Entity:** BALSONS Heavy Lift & Shift  
-**Release Tag:** `v1.0.0-PROD` (Git Commit `79011fd`)  
+**Release Tag:** `v1.0.0-PROD` (Git Commit `50f6643`)  
 **Architecture Standard:** SAM-2026 4-Tier Serverless Architecture  
 **UI/UX Standard:** BALSONS Enterprise Design System (BEDS V2.0)  
 **Date of Handover:** 24-Nov-2026  

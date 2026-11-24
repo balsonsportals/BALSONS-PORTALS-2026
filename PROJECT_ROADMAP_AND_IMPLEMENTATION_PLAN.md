@@ -253,7 +253,7 @@ gantt
   2. Activate GitHub Pages / Enterprise CDN hosting for `main` branch.
   3. Execute live production smoke test suite: verify live Google Sheet connections and sync pills across all 7 portals.
   4. Perform Disaster Recovery validation: test daily backup snapshot restore and run `verifyAuditIntegrity()` to certify SHA-256 hash chains.
-  5. Executive Technical Handover: transfer root credentials, repository admin rights, and administrative keys to BALSONS executive management.
+  5. Executive Technical Handover: transfer root credentials (Google Login: `balsonsportals@gmail.com`), repository admin rights (account: `balsonsportals`), and root Drive vault ownership (`1p56Z_7_yHC5St8jsoadJnW7DJqJTIjde`) to BALSONS executive management.
 * **Exit Gate & Milestone:** Production system live, operational, and signed off with complete corporate ownership transfer.
 
 ---
