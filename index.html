@@ -414,6 +414,38 @@
       <a href="BALSONS HR MANAGER/frontend/register.html" class="btn-launch" style="background: var(--beds-charcoal-heading);">Open Onboarding Wizard &raquo;</a>
     </article>
 
+    <!-- Card 9: Universal Multi-Format Document & Evidence Vault -->
+    <article class="portal-card" style="border: 2px solid var(--beds-teal-primary); background: rgba(0, 151, 178, 0.04);">
+      <div>
+        <div class="portal-card-header">
+          <div class="portal-card-icon" style="background: rgba(0, 151, 178, 0.18);">📁</div>
+          <div>
+            <h2 class="portal-card-title">Universal Document Vault</h2>
+            <div class="portal-card-sub">PDFs · CAD · Images · Office · Media</div>
+          </div>
+        </div>
+        <ul class="portal-metrics-list">
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Supported Formats:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-teal-primary);">8 Enterprise MIME Types</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Multi-Modal Studio:</span>
+            <span class="portal-metrics-val">PDF, Lightbox, CAD, Grid</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Google Drive Parity:</span>
+            <span class="portal-metrics-val" style="color: var(--beds-status-cleared);">87 Provisioned Vaults</span>
+          </li>
+          <li class="portal-metrics-item">
+            <span class="portal-metrics-label">Ingestion Engine:</span>
+            <span class="portal-metrics-val">Drag &amp; Drop Multi-File</span>
+          </li>
+        </ul>
+      </div>
+      <a href="BALSONS REPORTS PORTAL/index.html?tab=tab-documents" class="btn-launch" style="background: var(--beds-teal-primary);">Open Universal Vault Studio &raquo;</a>
+    </article>
+
   </main>
 
   <!-- Core Scripts -->
@@ -421,10 +453,12 @@
   <script src="assets/js/beds-portal-login.js"></script>
   <script src="assets/js/beds-workspace.js"></script>
   <script src="assets/js/beds-superadmin.js"></script>
+  <script src="assets/js/balsons-docs-manager.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if (window.BalsonsWorkspace) window.BalsonsWorkspace.init();
       if (window.BalsonsSAMAuth) window.BalsonsSAMAuth.init();
+      if (window.BalsonsDocs) window.BalsonsDocs.init();
     });
   </script>
 </body>

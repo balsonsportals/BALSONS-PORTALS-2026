@@ -39,8 +39,21 @@
           btn.classList.add('active');
           const activePane = document.getElementById(targetTab);
           if (activePane) activePane.classList.add('active');
+
+          if (targetTab === 'tab-documents' && window.BalsonsDocs) {
+            window.BalsonsDocs.renderDocumentsTab('tab-documents');
+          }
         });
       });
+
+      // Handle URL param or session storage auto-tab
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialTab = urlParams.get('tab') || sessionStorage.getItem('active_tab');
+      if (initialTab) {
+        sessionStorage.removeItem('active_tab');
+        const targetBtn = document.querySelector(`.beds-tab-btn[data-tab="${initialTab}"]`);
+        if (targetBtn) targetBtn.click();
+      }
     },
 
     bindButtons: function() {
