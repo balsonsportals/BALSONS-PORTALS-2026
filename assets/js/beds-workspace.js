@@ -63,7 +63,7 @@
     { code: 'store', name: '📦 Store & Rigging Tackles', rootPath: 'BALSONS STORE MANAGER/frontend/index.html' },
     { code: 'operations', name: '🏗️ Operations & Heavy Lift', rootPath: 'BALSONS OPERATIONS MANAGER/index.html' },
     { code: 'purchase', name: '📑 Purchase & Vendor Manager', rootPath: 'BALSONS PURCHASE MANAGER/index.html' },
-    { code: 'reports', name: '🌐 Central Sync Hub & Reports', rootPath: 'BALSONS REPOTS PORTAL/index.html' },
+    { code: 'reports', name: '🌐 Central Sync Hub & Reports', rootPath: 'BALSONS REPORTS PORTAL/index.html' },
     { code: 'launcher', name: '🚀 Central Enterprise Launcher', rootPath: 'index.html' }
   ];
 
@@ -90,6 +90,7 @@
       if (p.includes('/balsons enterprise launcher/') || 
           p.includes('/balsons operations manager/') || 
           p.includes('/balsons purchase manager/') || 
+          p.includes('/balsons reports portal/') || 
           p.includes('/balsons repots portal/')) return '../';
       return '';
     },
