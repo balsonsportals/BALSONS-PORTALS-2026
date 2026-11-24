@@ -7,83 +7,95 @@
  * and records their unique IDs into PropertiesService for backend engine consumption.
  */
 
-function provisionEnterpriseDatabases() {
-  var rootFolderName = 'BALSONS_ENTERPRISE_SYSTEM_MASTER_VAULT';
-  var rootFolders = DriveApp.getFoldersByName(rootFolderName);
-  var rootFolder = rootFolders.hasNext() ? rootFolders.next() : DriveApp.createFolder(rootFolderName);
-
-  var portals = [
-    { code: 'HR', name: 'BALSONS_HR_PAYROLL_DATABASE_MASTER', propKey: 'HR_SPREADSHEET_ID' },
-    { code: 'GATE', name: 'BALSONS_GATE_ENTRY_DATABASE_MASTER', propKey: 'GATE_SPREADSHEET_ID' },
-    { code: 'SAFETY', name: 'BALSONS_SAFETY_DATABASE_MASTER', propKey: 'SAFETY_SPREADSHEET_ID' },
-    { code: 'STORE', name: 'BALSONS_STORE_DATABASE_MASTER', propKey: 'STORE_SPREADSHEET_ID' },
-    { code: 'PURCHASE', name: 'BALSONS_PURCHASE_DATABASE_MASTER', propKey: 'PURCHASE_SPREADSHEET_ID' },
-    { code: 'OPERATIONS', name: 'BALSONS_OPERATIONS_DATABASE_MASTER', propKey: 'OPERATIONS_SPREADSHEET_ID' },
-    { code: 'SYNCHUB', name: 'BALSONS_CENTRAL_SYNC_HUB_DATABASE', propKey: 'SYNCHUB_SPREADSHEET_ID' }
-  ];
-
-  var provisionedMap = {};
-
-  portals.forEach(function(p) {
-    var ss = SpreadsheetApp.create(p.name);
-    var file = DriveApp.getFileById(ss.getId());
-    file.moveTo(rootFolder);
-    PropertiesService.getScriptProperties().setProperty(p.propKey, ss.getId());
-    provisionedMap[p.code] = { 
-      name: p.name, 
-      id: ss.getId(), 
-      url: ss.getUrl() 
-    };
-    Logger.log('✅ Provisioned Database: ' + p.name + ' -> ID: ' + ss.getId());
-  });
-
-  return {
-    success: true,
-    rootFolderId: rootFolder.getId(),
-    databases: provisionedMap,
-    timestamp: new Date().toISOString()
-  };
-}
+// Production Spreadsheet IDs in balsonsportals@gmail.com
+var ENTERPRISE_DATABASES = {
+  HR: {
+    name: 'BALSONS_HR_PAYROLL_DATABASE_MASTER',
+    id: '1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw',
+    propKey: 'HR_SPREADSHEET_ID'
+  },
+  GATE: {
+    name: 'BALSONS_GATE_ENTRY_DATABASE_MASTER',
+    id: '1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534',
+    propKey: 'GATE_SPREADSHEET_ID'
+  },
+  SAFETY: {
+    name: 'BALSONS_SAFETY_DATABASE_MASTER',
+    id: '1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0',
+    propKey: 'SAFETY_SPREADSHEET_ID'
+  },
+  STORE: {
+    name: 'BALSONS_STORE_DATABASE_MASTER',
+    id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+    propKey: 'STORE_SPREADSHEET_ID'
+  },
+  PURCHASE: {
+    name: 'BALSONS_PURCHASE_DATABASE_MASTER',
+    id: '1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c',
+    propKey: 'PURCHASE_SPREADSHEET_ID'
+  },
+  OPERATIONS: {
+    name: 'BALSONS_OPERATIONS_DATABASE_MASTER',
+    id: '1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E',
+    propKey: 'OPERATIONS_SPREADSHEET_ID'
+  },
+  SYNCHUB: {
+    name: 'BALSONS_CENTRAL_SYNC_HUB_DATABASE',
+    id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+    propKey: 'SYNCHUB_SPREADSHEET_ID'
+  }
+};
 
 /**
- * Provisions the complete 87-subvault Google Drive file management hierarchy
- * under the root vault 1p56Z_7_yHC5St8jsoadJnW7DJqJTIjde.
+ * Resolves a database spreadsheet by checking Drive files by name first,
+ * then ScriptProperties, and finally verified fallback IDs.
  */
-function provisionDriveVaultHierarchy() {
-  var rootVaultId = '1p56Z_7_yHC5St8jsoadJnW7DJqJTIjde';
-  var rootFolder;
-  try {
-    rootFolder = DriveApp.getFolderById(rootVaultId);
-  } catch (e) {
-    rootFolder = DriveApp.createFolder('BALSONS_ENTERPRISE_SYSTEM_MASTER_VAULT');
+function getDatabaseSpreadsheet(name, fallbackId, propKey) {
+  // 1. Check if user set it in PropertiesService
+  if (propKey) {
+    var storedId = PropertiesService.getScriptProperties().getProperty(propKey);
+    if (storedId) {
+      try {
+        var ss = SpreadsheetApp.openById(storedId);
+        Logger.log('📍 [PropertiesService] Loaded ' + name + ' -> ID: ' + storedId);
+        return ss;
+      } catch (e) {
+        Logger.log('⚠️ ID in ' + propKey + ' could not be opened: ' + e.message);
+      }
+    }
   }
 
-  var departments = [
-    { name: '01_GATE_ENTRY_MANAGER', subfolders: ['01_GATE_PASSES', '02_MATERIAL_CHALLANS', '03_VEHICLES_AND_DRIVERS', '04_SECURITY_LOGS_AND_REPORTS'] },
-    { name: '02_HR_AND_PAYROLL_MANAGER', subfolders: ['01_EMPLOYEE_KYC_DOSSIERS', '02_STATUTORY_FITNESS_FORM31', '03_POLICE_VERIFICATION_PVC', '04_PAYROLL_AND_SALARY_SLIPS', '05_HR_LETTERS_AND_EXPENSES'] },
-    { name: '03_OPERATIONS_AND_RIGGING_MANAGER', subfolders: ['01_WORK_PACKAGE_DOSSIERS', '02_DAILY_SHIFT_LOGS_DPR', '03_HOLDS_AND_DISCREPANCIES', '04_CRANE_AND_SPMT_INSPECTIONS'] },
-    { name: '04_PURCHASE_AND_COMMERCIAL_MANAGER', subfolders: ['01_VENDOR_KYC_AND_AGREEMENTS', '02_VENDOR_RFQS_AND_QUOTATIONS', '03_PURCHASE_REQUISITIONS_PR', '04_PURCHASE_ORDERS_PO', '05_ADVANCE_SHIPPING_AND_GRN', '06_COMMERCIAL_VOUCHERS_AND_INVOICES'] },
-    { name: '05_SAFETY_AND_RISK_MANAGER', subfolders: ['01_PERMIT_TO_WORK_PTW', '02_TOOLBOX_TALKS_TBT', '03_HIRA_JSA_RISK_ASSESSMENTS', '04_INCIDENT_AND_CAPA_REPORTS'] },
-    { name: '06_STORE_AND_TACKLE_MANAGER', subfolders: ['01_FORM11_STATUTORY_CERTIFICATES', '02_TOOL_AND_TACKLE_ISSUE_SLIPS', '03_TOOL_RETURN_AND_CUSTODY_VOUCHERS', '04_SCRAP_AND_QUARANTINE_ADVICES', '05_CALIBRATION_NABL_RECORDS'] },
-    { name: '07_EXECUTIVE_GOVERNANCE_AND_SYNC_HUB', subfolders: ['01_EXECUTIVE_ECOSYSTEM_REPORTS', '02_MANAGEMENT_BOARD_PACKS', '03_CLOUD_DATABASE_BACKUPS', '04_SYSTEM_AUDIT_LOG_EXPORTS'] }
-  ];
+  // 2. Search Drive for file by exact name
+  try {
+    var files = DriveApp.getFilesByName(name);
+    if (files.hasNext()) {
+      var file = files.next();
+      var foundId = file.getId();
+      Logger.log('📍 [Drive Search] Found file named "' + name + '" -> ID: ' + foundId);
+      if (propKey) {
+        PropertiesService.getScriptProperties().setProperty(propKey, foundId);
+      }
+      return SpreadsheetApp.openById(foundId);
+    }
+  } catch (e) {
+    Logger.log('⚠️ Drive search error for ' + name + ': ' + e.message);
+  }
 
-  var vaultMap = {};
+  // 3. Fallback to known live ID
+  if (fallbackId) {
+    try {
+      var fallbackSs = SpreadsheetApp.openById(fallbackId);
+      Logger.log('📍 [Fallback ID] Opened ' + name + ' -> ID: ' + fallbackId);
+      if (propKey) {
+        PropertiesService.getScriptProperties().setProperty(propKey, fallbackId);
+      }
+      return fallbackSs;
+    } catch (e) {
+      Logger.log('⚠️ Fallback ID failed for ' + name + ': ' + e.message);
+    }
+  }
 
-  departments.forEach(function(dept) {
-    var deptFolders = rootFolder.getFoldersByName(dept.name);
-    var deptFolder = deptFolders.hasNext() ? deptFolders.next() : rootFolder.createFolder(dept.name);
-    vaultMap[dept.name] = { id: deptFolder.getId(), subfolders: {} };
-
-    dept.subfolders.forEach(function(sub) {
-      var subFolders = deptFolder.getFoldersByName(sub);
-      var subFolder = subFolders.hasNext() ? subFolders.next() : deptFolder.createFolder(sub);
-      vaultMap[dept.name].subfolders[sub] = subFolder.getId();
-    });
-  });
-
-  Logger.log('✅ Successfully structured complete 87-subvault Google Drive hierarchy under root: ' + rootFolder.getId());
-  return vaultMap;
+  throw new Error('Database Spreadsheet not found for ' + name);
 }
 
 /**
@@ -109,16 +121,19 @@ function applyEnterpriseSchema(ss, schemas, dbName) {
     try { ss.deleteSheet(defSheet); } catch (e) {}
   }
 
-  Logger.log('✅ Successfully provisioned all ' + schemas.length + ' relational sheets in ' + dbName + ': ' + ss.getName());
-  return { success: true, count: schemas.length, name: ss.getName() };
+  Logger.log('✅ Successfully provisioned all ' + schemas.length + ' relational sheets in ' + dbName + ': ' + ss.getName() + ' (ID: ' + ss.getId() + ')');
+  return { success: true, count: schemas.length, name: ss.getName(), id: ss.getId(), url: ss.getUrl() };
 }
 
 /**
  * Initializes all 22 relational sheets in the HR Database with #102D35 headers
  */
 function initializeHrDatabaseSchemas() {
-  var hrSsId = PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID') || '1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw';
-  var ss = SpreadsheetApp.openById(hrSsId);
+  var ss = getDatabaseSpreadsheet(
+    ENTERPRISE_DATABASES.HR.name,
+    ENTERPRISE_DATABASES.HR.id,
+    ENTERPRISE_DATABASES.HR.propKey
+  );
 
   var SCHEMAS = [
     ['SYSTEM_CONFIG', ['ConfigKey', 'ConfigValue', 'Description', 'EffectiveDate', 'UpdatedBy']],
@@ -152,8 +167,11 @@ function initializeHrDatabaseSchemas() {
  * Initializes all 24 relational sheets in Gate Entry Database and seeds APP_CONFIG
  */
 function initializeGateDatabaseSchemas() {
-  var gateSsId = PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID') || '1yAuZOXc8WoC2TvTvnEWMrOyLl_50BRuJgDed_pdFT3o';
-  var ss = SpreadsheetApp.openById(gateSsId);
+  var ss = getDatabaseSpreadsheet(
+    ENTERPRISE_DATABASES.GATE.name,
+    ENTERPRISE_DATABASES.GATE.id,
+    ENTERPRISE_DATABASES.GATE.propKey
+  );
 
   var SCHEMAS = [
     ['APP_CONFIG', ['ConfigKey', 'ConfigValue', 'Description', 'LastUpdated', 'UpdatedBy']],
@@ -188,6 +206,15 @@ function initializeGateDatabaseSchemas() {
 }
 
 /**
+ * Direct Initializer specifically for the Gate Entry Master Sheet (ID: 1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534)
+ */
+function initializeGateDatabaseDirect() {
+  var gateSsId = '1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534';
+  PropertiesService.getScriptProperties().setProperty('GATE_SPREADSHEET_ID', gateSsId);
+  return initializeGateDatabaseSchemas();
+}
+
+/**
  * Seeds Application Configuration into Gate Entry Database
  */
 function seedGateConfig(ss) {
@@ -209,8 +236,11 @@ function seedGateConfig(ss) {
  * Initializes all relational sheets in Safety, EHS & PTW Database
  */
 function initializeSafetyDatabaseSchemas() {
-  var safetySsId = PropertiesService.getScriptProperties().getProperty('SAFETY_SPREADSHEET_ID') || '1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0';
-  var ss = SpreadsheetApp.openById(safetySsId);
+  var ss = getDatabaseSpreadsheet(
+    ENTERPRISE_DATABASES.SAFETY.name,
+    ENTERPRISE_DATABASES.SAFETY.id,
+    ENTERPRISE_DATABASES.SAFETY.propKey
+  );
 
   var SCHEMAS = [
     ['PTW_REGISTER', ['PERMIT_ID', 'CATEGORY', 'WORK_BAY', 'SUPERVISOR', 'VALID_FROM', 'VALID_TO', 'GAS_CHECK', 'STATE', 'SCOPE', 'CREATED_AT']],
@@ -227,8 +257,11 @@ function initializeSafetyDatabaseSchemas() {
  * Initializes all relational sheets in Store & Rigging Tackle Database
  */
 function initializeStoreDatabaseSchemas() {
-  var storeSsId = PropertiesService.getScriptProperties().getProperty('STORE_SPREADSHEET_ID') || '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ';
-  var ss = SpreadsheetApp.openById(storeSsId);
+  var ss = getDatabaseSpreadsheet(
+    ENTERPRISE_DATABASES.STORE.name,
+    ENTERPRISE_DATABASES.STORE.id,
+    ENTERPRISE_DATABASES.STORE.propKey
+  );
 
   var SCHEMAS = [
     ['RIGGING_TACKLE_MASTER', ['ASSET_ID', 'CATEGORY', 'DESCRIPTION', 'SWL', 'SERIAL_NO', 'CALIB_EXPIRY', 'TAG_COLOR', 'STATUS', 'LOCATION', 'CREATED_AT']],
@@ -245,8 +278,11 @@ function initializeStoreDatabaseSchemas() {
  * Initializes all relational sheets in Purchase & Vendor Database
  */
 function initializePurchaseDatabaseSchemas() {
-  var purchaseSsId = PropertiesService.getScriptProperties().getProperty('PURCHASE_SPREADSHEET_ID') || '1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c';
-  var ss = SpreadsheetApp.openById(purchaseSsId);
+  var ss = getDatabaseSpreadsheet(
+    ENTERPRISE_DATABASES.PURCHASE.name,
+    ENTERPRISE_DATABASES.PURCHASE.id,
+    ENTERPRISE_DATABASES.PURCHASE.propKey
+  );
 
   var SCHEMAS = [
     ['PURCHASE_REQUISITIONS', ['PR_ID', 'DATE', 'REQUESTOR', 'DEPARTMENT', 'DESCRIPTION', 'QTY', 'EST_VALUE', 'JUSTIFICATION', 'STATUS', 'CREATED_AT']],
@@ -263,8 +299,11 @@ function initializePurchaseDatabaseSchemas() {
  * Initializes all relational sheets in Operations & Heavy Erection Database
  */
 function initializeOperationsDatabaseSchemas() {
-  var operationsSsId = PropertiesService.getScriptProperties().getProperty('OPERATIONS_SPREADSHEET_ID') || '1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E';
-  var ss = SpreadsheetApp.openById(operationsSsId);
+  var ss = getDatabaseSpreadsheet(
+    ENTERPRISE_DATABASES.OPERATIONS.name,
+    ENTERPRISE_DATABASES.OPERATIONS.id,
+    ENTERPRISE_DATABASES.OPERATIONS.propKey
+  );
 
   var SCHEMAS = [
     ['WORK_PACKAGES', ['PACKAGE_ID', 'DESCRIPTION', 'TARGET_BAY', 'WEIGHT_MT', 'ASSIGNED_CRANE', 'LINKED_PTW', 'PROGRESS', 'STATUS', 'CREATED_AT']],
@@ -277,8 +316,37 @@ function initializeOperationsDatabaseSchemas() {
 }
 
 /**
+ * Master Discovery & Auditor: Scans Google Drive for all BALSONS database spreadsheets,
+ * logs their IDs and URLs, and saves their IDs into ScriptProperties.
+ */
+function discoverAndLogAllDatabases() {
+  Logger.log('🔍 Scanning Google Drive for all BALSONS operational spreadsheets...');
+  var keys = Object.keys(ENTERPRISE_DATABASES);
+  var report = {};
+
+  keys.forEach(function(k) {
+    var db = ENTERPRISE_DATABASES[k];
+    try {
+      var ss = getDatabaseSpreadsheet(db.name, db.id, db.propKey);
+      report[k] = {
+        name: ss.getName(),
+        id: ss.getId(),
+        sheetCount: ss.getSheets().length,
+        url: ss.getUrl()
+      };
+      Logger.log('✅ ' + db.name + ' -> ID: ' + ss.getId() + ' (Sheets: ' + ss.getSheets().length + ')');
+    } catch (e) {
+      report[k] = { name: db.name, error: e.message };
+      Logger.log('❌ ' + db.name + ' -> Error: ' + e.message);
+    }
+  });
+
+  return report;
+}
+
+/**
  * Master One-Click Initializer for ALL Remaining Databases
- * Executes Gate, Safety, Store, Purchase, and Operations schema setups in a single transaction.
+ * Executes Gate, Safety, Store, Purchase, and Operations schema setups in sequence.
  */
 function initializeAllRemainingDatabases() {
   Logger.log('🚀 Starting Unified Enterprise Schema Initialization for All Remaining Databases...');

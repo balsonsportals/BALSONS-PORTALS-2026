@@ -84,7 +84,7 @@ gantt
 * **Primary Objective:** Create fresh Google Sheets operational databases, structured relational sheets, validation rules, master seed data, and automated initializers.
 * **Target Operational Databases (Dedicated Spreadsheets):**
   1. `BALSONS_HR_PAYROLL_DATABASE_MASTER` (ID: `1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw`)
-  2. `BALSONS_GATE_ENTRY_DATABASE_MASTER` (ID: `1yAuZOXc8WoC2TvTvnEWMrOyLl_50BRuJgDed_pdFT3o`)
+  2. `BALSONS_GATE_ENTRY_DATABASE_MASTER` (ID: `1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534`)
   3. `BALSONS_SAFETY_DATABASE_MASTER` (ID: `1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0`)
   4. `BALSONS_STORE_DATABASE_MASTER` (ID: `1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ`)
   5. `BALSONS_PURCHASE_DATABASE_MASTER` (ID: `1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c`)

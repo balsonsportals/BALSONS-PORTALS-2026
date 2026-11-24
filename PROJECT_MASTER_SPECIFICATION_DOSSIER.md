@@ -228,7 +228,7 @@ sequenceDiagram
 | **Store & Rigging** | `1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ` | `1u_ZKvvC...` | `.../AKfycbyT6wmujgCq92wK1qUtiZLCTiajMfD8gXlmAoz1iJwDE92JStSTt0o80QX-7pRgI27u/exec` |
 | **Safety & PTW** | `1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0` | `1SyOGt6H...` | `.../AKfycbwgutbfm18PJPhsj_3-0C9Kt5AeaLqvGzoP8RMPab6ESzfm5SBkEPf8YslN8tJhOZJL/exec` |
 | **HR & Payroll** | `1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw` | `1so_aH05...` | `.../AKfycbyNreoI0QmRsiPgIBbJSh8YUjZCBa5f4E2UpsG3y03fcdcyUV_u76ZTCAcKfmAuXOWFmw/exec` |
-| **Gate Entry** | `1yAuZOXc8WoC2TvTvnEWMrOyLl_50BRuJgDed_pdFT3o` | `1yAuZOXc...` | `.../AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec` |
+| **Gate Entry** | `1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534` | `1WzxdGaG...` | `.../AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec` |
 | **Operations** | `1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E` | `1GeqDDmB...` | `.../1an3LeD6Ich14qtWZ5GFgJMaa3dYQSboZRwFy9g_gf9zWicPDB9KpFNny/exec` |
 | **Purchase** | `1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c` | `1ANnu4X2...` | `.../1BPmt-vDa-pBy07quE1wq7FY6kq8VnQJPUNIx1GrlSBD5UO9v3FflrZZN/exec` |
 | **Central Hub** | `1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ` | `1u_ZKvvC...` | `.../AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec` |
@@ -655,7 +655,7 @@ gantt
 * **Technical Scope & Deliverables:**
   - Execute `ProvisionEnterpriseDatabases.gs` to dynamically generate all 6 dedicated operational workbooks:
     1. `BALSONS_HR_PAYROLL_DATABASE_MASTER` (`1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw`)
-    2. `BALSONS_GATE_ENTRY_DATABASE_MASTER` (`1yAuZOXc8WoC2TvTvnEWMrOyLl_50BRuJgDed_pdFT3o`)
+    2. `BALSONS_GATE_ENTRY_DATABASE_MASTER` (`1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534`)
     3. `BALSONS_SAFETY_DATABASE_MASTER` (`1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0`)
     4. `BALSONS_STORE_DATABASE_MASTER` (`1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ`)
     5. `BALSONS_PURCHASE_DATABASE_MASTER` (`1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c`)

@@ -27,7 +27,7 @@
       scriptUrl: 'https://script.google.com/macros/s/AKfycbyNreoI0QmRsiPgIBbJSh8YUjZCBa5f4E2UpsG3y03fcdcyUV_u76ZTCAcKfmAuXOWFmw/exec'
     },
     'gate': {
-      id: '1yAuZOXc8WoC2TvTvnEWMrOyLl_50BRuJgDed_pdFT3o',
+      id: '1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534',
       name: 'Gate',
       fullName: 'Gate Entry & Turnstile Access Master',
       scriptUrl: 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec'

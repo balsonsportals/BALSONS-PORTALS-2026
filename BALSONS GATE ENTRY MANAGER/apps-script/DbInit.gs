@@ -7,7 +7,7 @@
  */
 
 function initializeFreshGateDatabase(targetSpreadsheetId) {
-  var ssId = targetSpreadsheetId || PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID');
+  var ssId = targetSpreadsheetId || PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID') || '1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534';
   if (!ssId) throw new Error('GATE_SPREADSHEET_ID is not configured.');
   var ss = SpreadsheetApp.openById(ssId);
 
