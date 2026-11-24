@@ -122,6 +122,19 @@ var GateTransactionService = {
     var sheet = ss.getSheetByName('MATERIAL_INWARD_REGISTER');
     var inwardId = 'INW-2026-' + ('0000' + sheet.getLastRow()).slice(-4);
 
+    var driveDocUrl = '';
+    if (payload.challanBase64) {
+      try {
+        var folder = DriveApp.getFolderById('1UaDIushjgT9n2-bMY0g0d7vHVofU9mqZ');
+        var blob = Utilities.newBlob(Utilities.base64Decode(payload.challanBase64), payload.challanMime || 'application/pdf', inwardId + '_CHALLAN.pdf');
+        var file = folder.createFile(blob);
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        driveDocUrl = file.getUrl();
+      } catch (e) {
+        Logger.log('Challan upload skipped: ' + e.message);
+      }
+    }
+
     sheet.appendRow([
       inwardId,
       payload.inwardType || 'PO_DELIVERY',
@@ -133,14 +146,16 @@ var GateTransactionService = {
       payload.materialCategory || 'RAW_STEEL',
       payload.declaredQty || '',
       payload.unloadingBay || 'Bay 1 Laydown',
-      payload.gatePassRef || '',
+      driveDocUrl || payload.gatePassRef || '',
       'GATE_RECEIVED',
       session.username,
       new Date().toISOString(),
       new Date().toISOString()
     ]);
 
-    return { success: true, inwardId: inwardId, status: 'GATE_RECEIVED' };
+    logGateAuditRecord(session.username, session.role || 'Security', 'MATERIAL_INWARD', inwardId, 'RECEIVED', 'Inward delivery PO: ' + poNo + ' DC: ' + dcNo);
+
+    return { success: true, inwardId: inwardId, status: 'GATE_RECEIVED', documentUrl: driveDocUrl };
   },
 
   /**

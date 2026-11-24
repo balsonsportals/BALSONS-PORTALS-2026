@@ -134,3 +134,73 @@ function createJsonResponse(success, action, data, statusCode, requestId) {
   return ContentService.createTextOutput(JSON.stringify(response))
     .setMimeType(ContentService.MimeType.TEXT);
 }
+
+/**
+ * Scheduled Daily Trigger: Checks and flags Overdue Returnable Gate Passes (RGP)
+ */
+function checkOverdueGatePasses() {
+  var ss = getGateSpreadsheet();
+  var sheet = ss.getSheetByName('GATE_PASS_REGISTER');
+  if (!sheet) return;
+
+  var data = sheet.getDataRange().getValues();
+  var today = new Date().toISOString().slice(0, 10);
+  var overdueCount = 0;
+
+  for (var i = 1; i < data.length; i++) {
+    var passType = data[i][1];
+    var returnDueDate = data[i][6];
+    var gateStatus = data[i][11];
+
+    if (passType === 'RGP' && gateStatus === 'EXITED' && returnDueDate && returnDueDate < today) {
+      sheet.getRange(i + 1, 12).setValue('OVERDUE_ALERT');
+      overdueCount++;
+      logGateAuditRecord('SYSTEM_TRIGGER', 'Automated', 'RGP_OVERDUE_FLAGGED', data[i][0], 'ALERT', 'RGP passed due date: ' + returnDueDate);
+    }
+  }
+
+  Logger.log('✅ Overdue Pass Scan Complete. Total Overdue Flagged: ' + overdueCount);
+  return { success: true, overdueCount: overdueCount };
+}
+
+/**
+ * Universal Cryptographic SHA-256 Audit Trail Recorder for Gate Entry
+ */
+function logGateAuditRecord(actor, role, action, entityId, outcome, details) {
+  try {
+    var ss = getGateSpreadsheet();
+    var sheet = ss.getSheetByName('AUDIT_LOG');
+    if (!sheet) return;
+
+    var auditId = 'AUD-GATE-' + Date.now();
+    var timestamp = new Date().toISOString();
+    var lastRow = sheet.getLastRow();
+    var prevHash = 'GENESIS_BLOCK_2026_BALSONS_GATE';
+
+    if (lastRow > 1) {
+      prevHash = String(sheet.getRange(lastRow, 10).getValue()) || prevHash;
+    }
+
+    var payloadToHash = prevHash + '|' + auditId + '|' + timestamp + '|' + actor + '|' + action + '|' + entityId + '|' + outcome;
+    var digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, payloadToHash, Utilities.Charset.UTF_8);
+    var currentHash = digest.map(function(b) {
+      var v = (b < 0 ? b + 256 : b).toString(16);
+      return v.length === 1 ? '0' + v : v;
+    }).join('');
+
+    sheet.appendRow([
+      auditId,
+      timestamp,
+      actor,
+      role,
+      action,
+      entityId,
+      outcome,
+      details,
+      prevHash,
+      currentHash
+    ]);
+  } catch (e) {
+    Logger.log('Gate Audit Log Error: ' + e.message);
+  }
+}

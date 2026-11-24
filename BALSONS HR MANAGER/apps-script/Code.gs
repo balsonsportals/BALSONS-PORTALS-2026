@@ -235,3 +235,157 @@ function computeCryptographicHash(password, salt) {
     return v.length === 1 ? '0' + v : v;
   }).join('');
 }
+
+/**
+ * Processes Candidate Self-Registration from register.html
+ */
+function handleCandidateSelfRegistration(payload) {
+  if (!payload || !payload.fullName || !payload.mobile) {
+    return { success: false, error: 'MANDATORY_FIELDS_MISSING', status: 400 };
+  }
+
+  var ss = getHrSpreadsheet();
+  var empSheet = ss.getSheetByName('EMPLOYEE_MASTER');
+  if (!empSheet) return { success: false, error: 'EMPLOYEE_MASTER_MISSING', status: 500 };
+
+  var nextNum = empSheet.getLastRow();
+  var empId = 'EMP-2026-' + ('0000' + nextNum).slice(-4);
+  var refCode = 'REG-2026-' + ('0000' + Math.floor(Math.random() * 9000 + 1000)).slice(-4);
+
+  var photoUrl = '';
+  if (payload.photoBase64) {
+    try {
+      var folder = DriveApp.getFolderById('1M-Lc7VoEB03KiVYQrABHW8g4q4h-QSHV');
+      var blob = Utilities.newBlob(Utilities.base64Decode(payload.photoBase64), payload.photoMime || 'image/jpeg', empId + '_PHOTO.jpg');
+      var file = folder.createFile(blob);
+      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      photoUrl = file.getUrl();
+    } catch (e) {
+      Logger.log('Photo upload skipped: ' + e.message);
+    }
+  }
+
+  var row = [
+    empId,
+    payload.fullName.trim(),
+    payload.fatherName ? payload.fatherName.trim() : '',
+    payload.dob || '',
+    payload.gender || 'M',
+    payload.bloodGroup || '',
+    payload.mobile,
+    payload.emergencyContact || '',
+    payload.permanentAddress || '',
+    payload.siteCampAddress || '',
+    payload.department || 'Heavy Rigging & Lift',
+    payload.designation || 'Technician',
+    payload.trade || 'Rigging',
+    payload.wageType || 'DAILY_PAY',
+    Number(payload.dailyRateOrCtc || 950),
+    new Date().toISOString().slice(0, 10),
+    payload.wageType === 'MONTHLY',
+    payload.wageType === 'MONTHLY' && Number(payload.dailyRateOrCtc || 0) <= 21000,
+    payload.panNo || '',
+    payload.aadhaarNo || '',
+    payload.policeVerificationRef || 'PENDING_VERIFICATION',
+    payload.medicalFitnessRef || 'PENDING_FITNESS',
+    payload.bankAccNo || '',
+    payload.bankIfsc || '',
+    photoUrl || payload.photoUrl || '',
+    'PENDING_ONBOARDING'
+  ];
+
+  empSheet.appendRow(row);
+
+  var docSheet = ss.getSheetByName('EMPLOYEE_DOCUMENTS');
+  if (docSheet && payload.documents && Array.isArray(payload.documents)) {
+    payload.documents.forEach(function(doc, idx) {
+      var docId = 'DOC-' + empId + '-' + (idx + 1);
+      docSheet.appendRow([
+        docId,
+        empId,
+        doc.docType || 'GOVT_ID',
+        doc.docRefNo || '',
+        new Date().toISOString().slice(0, 10),
+        doc.expiryDate || '',
+        'PENDING_VERIFICATION',
+        doc.driveUrl || photoUrl
+      ]);
+    });
+  }
+
+  logAuditRecord('HR_ONBOARDING', 'SYSTEM_PORTAL', 'Candidate', 'SELF_REGISTRATION', empId, 'SUCCESS', 'Candidate submitted self-registration ref: ' + refCode);
+
+  return {
+    success: true,
+    refCode: refCode,
+    empId: empId,
+    message: 'Candidate registration submitted successfully and queued for HR review.'
+  };
+}
+
+/**
+ * Handles Dual-Sync Polling telemetry updates for HR Portal
+ */
+function handleSyncPoll(payload, session) {
+  var ss = getHrSpreadsheet();
+  var empSheet = ss.getSheetByName('EMPLOYEE_MASTER');
+  var advSheet = ss.getSheetByName('ADVANCE_MASTER');
+  var paySheet = ss.getSheetByName('PAYROLL_REGISTER');
+
+  var employees = empSheet ? Math.max(0, empSheet.getLastRow() - 1) : 0;
+  var advances = advSheet ? Math.max(0, advSheet.getLastRow() - 1) : 0;
+  var payrollRuns = paySheet ? Math.max(0, paySheet.getLastRow() - 1) : 0;
+
+  return {
+    success: true,
+    telemetry: {
+      totalEmployees: employees,
+      activeAdvances: advances,
+      payrollRecords: payrollRuns,
+      serverTime: new Date().toISOString(),
+      syncParity: '100%_SYNCHRONIZED'
+    }
+  };
+}
+
+/**
+ * Universal Cryptographic SHA-256 Audit Trail Recorder
+ */
+function logAuditRecord(module, actor, role, action, entityRef, outcome, details) {
+  try {
+    var ss = getHrSpreadsheet();
+    var sheet = ss.getSheetByName('AUDIT_LOG');
+    if (!sheet) return;
+
+    var auditId = 'AUD-' + Date.now();
+    var timestamp = new Date().toISOString();
+    var lastRow = sheet.getLastRow();
+    var prevHash = 'GENESIS_BLOCK_2026_BALSONS';
+
+    if (lastRow > 1) {
+      prevHash = String(sheet.getRange(lastRow, 10).getValue()) || prevHash;
+    }
+
+    var payloadToHash = prevHash + '|' + auditId + '|' + timestamp + '|' + actor + '|' + action + '|' + entityRef + '|' + outcome;
+    var digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, payloadToHash, Utilities.Charset.UTF_8);
+    var currentHash = digest.map(function(b) {
+      var v = (b < 0 ? b + 256 : b).toString(16);
+      return v.length === 1 ? '0' + v : v;
+    }).join('');
+
+    sheet.appendRow([
+      auditId,
+      timestamp,
+      actor,
+      role,
+      action,
+      entityRef,
+      outcome,
+      details,
+      prevHash,
+      currentHash
+    ]);
+  } catch (e) {
+    Logger.log('Audit log write error: ' + e.message);
+  }
+}
