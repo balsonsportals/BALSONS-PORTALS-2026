@@ -21,27 +21,27 @@ var ENTERPRISE_DATABASES = {
   },
   SAFETY: {
     name: 'BALSONS_SAFETY_DATABASE_MASTER',
-    id: '1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0',
+    id: '1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0',
     propKey: 'SAFETY_SPREADSHEET_ID'
   },
   STORE: {
     name: 'BALSONS_STORE_DATABASE_MASTER',
-    id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+    id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',
     propKey: 'STORE_SPREADSHEET_ID'
   },
   PURCHASE: {
     name: 'BALSONS_PURCHASE_DATABASE_MASTER',
-    id: '1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c',
+    id: '1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4',
     propKey: 'PURCHASE_SPREADSHEET_ID'
   },
   OPERATIONS: {
     name: 'BALSONS_OPERATIONS_DATABASE_MASTER',
-    id: '1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E',
+    id: '1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro',
     propKey: 'OPERATIONS_SPREADSHEET_ID'
   },
   SYNCHUB: {
     name: 'BALSONS_CENTRAL_SYNC_HUB_DATABASE',
-    id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+    id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',
     propKey: 'SYNCHUB_SPREADSHEET_ID'
   }
 };

@@ -1,10 +1,10 @@
 /**
  * BALSONS MULTI-PORTAL ENTERPRISE ECOSYSTEM (2026)
  * Operations & Heavy Erection - Main Engine Backend
- * Dedicated Spreadsheet ID: 1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E
+ * Dedicated Spreadsheet ID: 1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro
  */
 
-const OPERATIONS_SPREADSHEET_ID = '1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E';
+const OPERATIONS_SPREADSHEET_ID = '1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro';
 
 function doPost(e) {
   const lock = LockService.getScriptLock();

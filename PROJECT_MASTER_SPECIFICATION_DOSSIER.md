@@ -225,13 +225,13 @@ sequenceDiagram
 
 | Operational Domain | Dedicated Production Spreadsheet ID | Abbreviated ID | Production Apps Script Web App URL |
 | :--- | :--- | :---: | :--- |
-| **Store & Rigging** | `1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ` | `1u_ZKvvC...` | `.../AKfycbyT6wmujgCq92wK1qUtiZLCTiajMfD8gXlmAoz1iJwDE92JStSTt0o80QX-7pRgI27u/exec` |
-| **Safety & PTW** | `1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0` | `1SyOGt6H...` | `.../AKfycbwgutbfm18PJPhsj_3-0C9Kt5AeaLqvGzoP8RMPab6ESzfm5SBkEPf8YslN8tJhOZJL/exec` |
+| **Store & Rigging** | `1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4` | `1M8lqdh_...` | `.../AKfycbyT6wmujgCq92wK1qUtiZLCTiajMfD8gXlmAoz1iJwDE92JStSTt0o80QX-7pRgI27u/exec` |
+| **Safety & PTW** | `1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0` | `1iAiqscE...` | `.../AKfycbwgutbfm18PJPhsj_3-0C9Kt5AeaLqvGzoP8RMPab6ESzfm5SBkEPf8YslN8tJhOZJL/exec` |
 | **HR & Payroll** | `1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw` | `1so_aH05...` | `.../AKfycbyNreoI0QmRsiPgIBbJSh8YUjZCBa5f4E2UpsG3y03fcdcyUV_u76ZTCAcKfmAuXOWFmw/exec` |
 | **Gate Entry** | `1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534` | `1WzxdGaG...` | `.../AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec` |
-| **Operations** | `1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E` | `1GeqDDmB...` | `.../1an3LeD6Ich14qtWZ5GFgJMaa3dYQSboZRwFy9g_gf9zWicPDB9KpFNny/exec` |
-| **Purchase** | `1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c` | `1ANnu4X2...` | `.../1BPmt-vDa-pBy07quE1wq7FY6kq8VnQJPUNIx1GrlSBD5UO9v3FflrZZN/exec` |
-| **Central Hub** | `1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ` | `1u_ZKvvC...` | `.../AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec` |
+| **Operations** | `1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro` | `1De9UXdK...` | `.../1an3LeD6Ich14qtWZ5GFgJMaa3dYQSboZRwFy9g_gf9zWicPDB9KpFNny/exec` |
+| **Purchase** | `1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4` | `1j0CExit...` | `.../1BPmt-vDa-pBy07quE1wq7FY6kq8VnQJPUNIx1GrlSBD5UO9v3FflrZZN/exec` |
+| **Central Hub** | `1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4` | `1M8lqdh_...` | `.../AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec` |
 
 ### 4.3 Conflict Resolution Policies
 * **Concurrent Profile Updates:** Last-Write-Wins (LWW) arbitrated by server timestamp.
@@ -656,10 +656,10 @@ gantt
   - Execute `ProvisionEnterpriseDatabases.gs` to dynamically generate all 6 dedicated operational workbooks:
     1. `BALSONS_HR_PAYROLL_DATABASE_MASTER` (`1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw`)
     2. `BALSONS_GATE_ENTRY_DATABASE_MASTER` (`1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534`)
-    3. `BALSONS_SAFETY_DATABASE_MASTER` (`1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0`)
-    4. `BALSONS_STORE_DATABASE_MASTER` (`1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ`)
-    5. `BALSONS_PURCHASE_DATABASE_MASTER` (`1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c`)
-    6. `BALSONS_OPERATIONS_DATABASE_MASTER` (`1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E`)
+    3. `BALSONS_SAFETY_DATABASE_MASTER` (`1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0`)
+    4. `BALSONS_STORE_DATABASE_MASTER` (`1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4`)
+    5. `BALSONS_PURCHASE_DATABASE_MASTER` (`1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4`)
+    6. `BALSONS_OPERATIONS_DATABASE_MASTER` (`1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro`)
   - Run `initializeFreshHrDatabase()` to provision all 22 relational sheets with frozen headers and `#102D35` dark teal styling.
   - Run `initializeFreshGateDatabase()` to provision all 24 relational sheets with data validation rules.
   - Seed master reference tables: `DEPARTMENT_MASTER`, `PROJECT_MASTER`, `LEAVE_MASTER`, `APP_CONFIG`, and `SYSTEM_CONFIG`.

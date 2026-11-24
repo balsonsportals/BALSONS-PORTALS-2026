@@ -1,10 +1,10 @@
 /**
  * BALSONS MULTI-PORTAL ENTERPRISE ECOSYSTEM (2026)
  * Store & Rigging Tackle Master - Main Engine Backend
- * Dedicated Spreadsheet ID: 1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ
+ * Dedicated Spreadsheet ID: 1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4
  */
 
-const STORE_SPREADSHEET_ID = '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ';
+const STORE_SPREADSHEET_ID = '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4';
 
 function doPost(e) {
   const lock = LockService.getScriptLock();

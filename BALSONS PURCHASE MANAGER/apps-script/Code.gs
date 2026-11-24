@@ -1,10 +1,10 @@
 /**
  * BALSONS MULTI-PORTAL ENTERPRISE ECOSYSTEM (2026)
  * Purchase & Vendor Manager - Main Engine Backend
- * Dedicated Spreadsheet ID: 1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c
+ * Dedicated Spreadsheet ID: 1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4
  */
 
-const PURCHASE_SPREADSHEET_ID = '1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c';
+const PURCHASE_SPREADSHEET_ID = '1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4';
 
 function doPost(e) {
   const lock = LockService.getScriptLock();

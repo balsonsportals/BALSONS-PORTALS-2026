@@ -9,13 +9,13 @@
 (function() {
   const PORTAL_DATABASES = {
     'store': {
-      id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+      id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',
       name: 'Store',
       fullName: 'Store & Heavy Rigging Inventory Master',
       scriptUrl: 'https://script.google.com/macros/s/AKfycbyT6wmujgCq92wK1qUtiZLCTiajMfD8gXlmAoz1iJwDE92JStSTt0o80QX-7pRgI27u/exec'
     },
     'safety': {
-      id: '1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0',
+      id: '1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0',
       name: 'Safety',
       fullName: 'Safety, EHS & PTW Governance',
       scriptUrl: 'https://script.google.com/macros/s/AKfycbwgutbfm18PJPhsj_3-0C9Kt5AeaLqvGzoP8RMPab6ESzfm5SBkEPf8YslN8tJhOZJL/exec'
@@ -33,24 +33,24 @@
       scriptUrl: 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec'
     },
     'operations': {
-      id: '1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E',
+      id: '1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro',
       name: 'Operations',
       fullName: 'Operations Erection & Heavy Lift Master',
       scriptUrl: 'https://script.google.com/macros/s/1an3LeD6Ich14qtWZ5GFgJMaa3dYQSboZRwFy9g_gf9zWicPDB9KpFNny/exec'
     },
     'purchase': {
-      id: '1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c',
+      id: '1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4',
       name: 'Purchase',
       fullName: 'Commercial Procurement & Vendor Master',
       scriptUrl: 'https://script.google.com/macros/s/1BPmt-vDa-pBy07quE1wq7FY6kq8VnQJPUNIx1GrlSBD5UO9v3FflrZZN/exec'
     },
     'reports': {
-      id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+      id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',
       name: 'Central Sync Hub',
       fullName: 'Central Sync Hub & Master Reporting'
     },
     'launcher': {
-      id: '1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ',
+      id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',
       name: 'Ecosystem',
       fullName: 'Central Enterprise Launcher'
     }

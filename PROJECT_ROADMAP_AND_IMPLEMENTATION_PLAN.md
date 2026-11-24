@@ -85,10 +85,10 @@ gantt
 * **Target Operational Databases (Dedicated Spreadsheets):**
   1. `BALSONS_HR_PAYROLL_DATABASE_MASTER` (ID: `1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw`)
   2. `BALSONS_GATE_ENTRY_DATABASE_MASTER` (ID: `1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534`)
-  3. `BALSONS_SAFETY_DATABASE_MASTER` (ID: `1SyOGt6HEu6HJCufAbB2_P6BgF6pEppt28J_8cARaOP0`)
-  4. `BALSONS_STORE_DATABASE_MASTER` (ID: `1u_ZKvvCVfEQDAtkoMR68q2d2hEK-eWBnvsS3AGfP6yQ`)
-  5. `BALSONS_PURCHASE_DATABASE_MASTER` (ID: `1ANnu4X2dR0EITq5RvkyfMv1Xfz30Ba26IKjc40uyj_c`)
-  6. `BALSONS_OPERATIONS_DATABASE_MASTER` (ID: `1GeqDDmBgdVm3ZUp4c9iB36__iLJ9wADQQRhEIwVxa-E`)
+  3. `BALSONS_SAFETY_DATABASE_MASTER` (ID: `1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0`)
+  4. `BALSONS_STORE_DATABASE_MASTER` (ID: `1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4`)
+  5. `BALSONS_PURCHASE_DATABASE_MASTER` (ID: `1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4`)
+  6. `BALSONS_OPERATIONS_DATABASE_MASTER` (ID: `1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro`)
 * **Step-by-Step Technical Execution:**
   1. Deploy `ProvisionEnterpriseDatabases.gs` to create spreadsheets and register their IDs in `PropertiesService`.
   2. Execute `initializeFreshHrDatabase()`:
