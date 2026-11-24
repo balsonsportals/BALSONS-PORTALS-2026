@@ -245,6 +245,7 @@
     </form>
   </div>
 
+  <script src="../../assets/js/beds-workspace.js"></script>
   <script>
     var currentStep = 1;
     var totalSteps = 6;
@@ -294,6 +295,22 @@
       document.getElementById('wRefCode').textContent = refCode;
       document.getElementById('wSuccessBanner').style.display = 'block';
       btnSubmit.disabled = true;
+
+      var regPayload = {
+        refCode: refCode,
+        fullName: document.getElementById('wFullName') ? document.getElementById('wFullName').value : '',
+        fatherName: document.getElementById('wFatherName') ? document.getElementById('wFatherName').value : '',
+        dob: document.getElementById('wDOB') ? document.getElementById('wDOB').value : '',
+        bloodGroup: document.getElementById('wBloodGroup') ? document.getElementById('wBloodGroup').value : '',
+        mobile: document.getElementById('wMobile') ? document.getElementById('wMobile').value : '',
+        department: document.getElementById('wDept') ? document.getElementById('wDept').value : 'ERECTION',
+        submittedAt: new Date().toISOString()
+      };
+
+      if (window.BalsonsWorkspace) {
+        window.BalsonsWorkspace.enqueueMutation('CANDIDATE_SELF_REGISTER', regPayload);
+        window.BalsonsWorkspace.showToast('✅ Onboarding dossier synced: ' + refCode, 'success');
+      }
     });
   </script>
 </body>
