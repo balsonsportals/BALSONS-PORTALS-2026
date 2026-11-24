@@ -12,37 +12,37 @@
       id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',
       name: 'Store',
       fullName: 'Store & Heavy Rigging Inventory Master',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbyT6wmujgCq92wK1qUtiZLCTiajMfD8gXlmAoz1iJwDE92JStSTt0o80QX-7pRgI27u/exec'
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbxnitdgzVXivK_hwlupc6CrImRKImW5s4pm_AB4lrnCFOin0fTzkWKyHINa8yaKy7vG/exec'
     },
     'safety': {
       id: '1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0',
       name: 'Safety',
       fullName: 'Safety, EHS & PTW Governance',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbwgutbfm18PJPhsj_3-0C9Kt5AeaLqvGzoP8RMPab6ESzfm5SBkEPf8YslN8tJhOZJL/exec'
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbytKTvVOA3zuJLF9pK2USAeDJnJMdVf8fkRzfYn_o34jnK_p59F5jdfeFOLYcCrOBkEwQ/exec'
     },
     'hr': {
       id: '1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw',
       name: 'HR',
       fullName: 'HR & Dual-Wage Payroll Master',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbyNreoI0QmRsiPgIBbJSh8YUjZCBa5f4E2UpsG3y03fcdcyUV_u76ZTCAcKfmAuXOWFmw/exec'
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbx1D1jbJQ5qsPJ6H8Dd54mt-3SDlc0IYkkEEKqleOJkkK3fYnujCPE_vmUp14ZaxmxftQ/exec'
     },
     'gate': {
       id: '1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534',
       name: 'Gate',
       fullName: 'Gate Entry & Turnstile Access Master',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec'
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbxqiDNdsoWJOHZVZMXYtu27MPBm9GScfiXCEvxSDUbuHrwp5-ivjzGb5nyXhr_Tnlwtbw/exec'
     },
     'operations': {
       id: '1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro',
       name: 'Operations',
       fullName: 'Operations Erection & Heavy Lift Master',
-      scriptUrl: 'https://script.google.com/macros/s/1an3LeD6Ich14qtWZ5GFgJMaa3dYQSboZRwFy9g_gf9zWicPDB9KpFNny/exec'
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbxl9NvWozM8kzrq2XN5G9pdrvrSRqU6T0qBi1qVqpfipX9DIr2_HmfUHOdy3p-N9_CS/exec'
     },
     'purchase': {
       id: '1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4',
       name: 'Purchase',
       fullName: 'Commercial Procurement & Vendor Master',
-      scriptUrl: 'https://script.google.com/macros/s/1BPmt-vDa-pBy07quE1wq7FY6kq8VnQJPUNIx1GrlSBD5UO9v3FflrZZN/exec'
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbz_gXydCQPB88QMPDt38h8Npg6LERK07BQ9p917wiRaahRpM2EBGPo5jdb-NAT2cDYTag/exec'
     },
     'reports': {
       id: '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4',

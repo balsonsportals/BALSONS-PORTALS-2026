@@ -12,14 +12,14 @@
 
   // Live Google Apps Script Web App API Endpoints
   const PORTAL_BACKEND_URLS = {
-    'gate': 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec',
-    'hr': 'https://script.google.com/macros/s/AKfycbyNreoI0QmRsiPgIBbJSh8YUjZCBa5f4E2UpsG3y03fcdcyUV_u76ZTCAcKfmAuXOWFmw/exec',
-    'safety': 'https://script.google.com/macros/s/AKfycbwgutbfm18PJPhsj_3-0C9Kt5AeaLqvGzoP8RMPab6ESzfm5SBkEPf8YslN8tJhOZJL/exec',
-    'store': 'https://script.google.com/macros/s/AKfycbyT6wmujgCq92wK1qUtiZLCTiajMfD8gXlmAoz1iJwDE92JStSTt0o80QX-7pRgI27u/exec',
-    'operations': 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec',
-    'purchase': 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec',
-    'reports': 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec',
-    'launcher': 'https://script.google.com/macros/s/AKfycbzqG6THkjhA-8324dOg9cbMAc3IWCZdmp9sT6zTdPINUWAgB0cOm4H4TFCWprYmT9lXNg/exec'
+    'gate': 'https://script.google.com/macros/s/AKfycbxqiDNdsoWJOHZVZMXYtu27MPBm9GScfiXCEvxSDUbuHrwp5-ivjzGb5nyXhr_Tnlwtbw/exec',
+    'hr': 'https://script.google.com/macros/s/AKfycbx1D1jbJQ5qsPJ6H8Dd54mt-3SDlc0IYkkEEKqleOJkkK3fYnujCPE_vmUp14ZaxmxftQ/exec',
+    'safety': 'https://script.google.com/macros/s/AKfycbytKTvVOA3zuJLF9pK2USAeDJnJMdVf8fkRzfYn_o34jnK_p59F5jdfeFOLYcCrOBkEwQ/exec',
+    'store': 'https://script.google.com/macros/s/AKfycbxnitdgzVXivK_hwlupc6CrImRKImW5s4pm_AB4lrnCFOin0fTzkWKyHINa8yaKy7vG/exec',
+    'operations': 'https://script.google.com/macros/s/AKfycbxl9NvWozM8kzrq2XN5G9pdrvrSRqU6T0qBi1qVqpfipX9DIr2_HmfUHOdy3p-N9_CS/exec',
+    'purchase': 'https://script.google.com/macros/s/AKfycbz_gXydCQPB88QMPDt38h8Npg6LERK07BQ9p917wiRaahRpM2EBGPo5jdb-NAT2cDYTag/exec',
+    'reports': 'https://script.google.com/macros/s/AKfycbxqiDNdsoWJOHZVZMXYtu27MPBm9GScfiXCEvxSDUbuHrwp5-ivjzGb5nyXhr_Tnlwtbw/exec',
+    'launcher': 'https://script.google.com/macros/s/AKfycbxqiDNdsoWJOHZVZMXYtu27MPBm9GScfiXCEvxSDUbuHrwp5-ivjzGb5nyXhr_Tnlwtbw/exec'
   };
 
   const DRIVE_FOLDERS = {
