@@ -95,7 +95,7 @@ The security policy strictly enforces:
 ### Master Super Administrator Account
 - **Username:** `superadmin`
 - **Owner Identity:** Prashant Muley (Executive Project Director & Lead Engineer)
-- **Official Email:** `pbmuley@gmail.com`
+- **Official Google Account / Login:** `balsonsportals@gmail.com`
 - **Permissions:** Unrestricted root access across all 7 portals, audit trails, and financial locks.
 
 ### 6-Tier Authority Role Hierarchy
@@ -136,6 +136,8 @@ The security policy strictly enforces:
 ## 8. Git Release Tag & Handover Status
 
 - **Repository Root:** `D:\jupiter files from\BALSONS PORTALS 2026`
+- **Git Repo Account:** `balsonsportals`
+- **Git Remote Origin:** `https://github.com/balsonsportals/BALSONS-PORTALS-2026.git`
+- **Git Author Profile:** `balsonsportals <balsonsportals@gmail.com>`
 - **Production Tag:** `v1.0.0-PROD`
-- **Commit Hash:** `79011fd`
 - **Status:** **FULLY FUNCTIONAL, PRODUCTION CERTIFIED & READY FOR OPERATION.**

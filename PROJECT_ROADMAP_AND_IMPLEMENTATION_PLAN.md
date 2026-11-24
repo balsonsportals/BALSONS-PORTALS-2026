@@ -231,6 +231,11 @@ gantt
 
 ### STAGE 9: FINAL BUILD & GIT PUSH
 * **Primary Objective:** Finalize and verify the complete source code, then push all approved frontend files and assets to the BALSONS-owned Git repository.
+* **Configured Repository Profile:**
+  - **Git Account:** `balsonsportals`
+  - **Author Identity:** `balsonsportals <balsonsportals@gmail.com>`
+  - **Remote Origin:** `https://github.com/balsonsportals/BALSONS-PORTALS-2026.git`
+  - **Official Google Account / Login:** `balsonsportals@gmail.com`
 * **Key Tasks:**
   1. Purge all temporary debug code, test harnesses, and development keys.
   2. Verify code hygiene: semantic markup, BEDS token consistency, strict zero hardcoded credentials.

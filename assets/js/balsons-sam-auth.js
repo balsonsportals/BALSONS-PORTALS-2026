@@ -106,7 +106,7 @@
     {
       username: "superadmin",
       fullName: "Prashant Muley (Global Super Administrator)",
-      email: "pbmuley@gmail.com",
+      email: "balsonsportals@gmail.com",
       role: "SUPER_ADMIN",
       assignedPortals: ["ALL"],
       canAccessConfidentialHR: true,
