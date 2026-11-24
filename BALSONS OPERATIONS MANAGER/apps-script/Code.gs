@@ -6,6 +6,17 @@
 
 const OPERATIONS_SPREADSHEET_ID = '1De9UXdK7PayfgGlGrYhYCyD9BfY1haN7GykGXBNQ2ro';
 
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: 'BALSONS_OPERATIONS_ERECTION_ENGINE',
+    version: '1.1.0-PROD',
+    status: 'HEALTHY',
+    spreadsheetId: OPERATIONS_SPREADSHEET_ID,
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   try {

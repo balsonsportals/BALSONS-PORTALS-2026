@@ -20,7 +20,7 @@ var GateTransactionService = {
 
     if (!subjectId) return { success: false, error: 'SUBJECT_ID_REQUIRED' };
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var logSheet = ss.getSheetByName('GATE_ENTRY_EXIT_LOG');
     var logs = logSheet.getDataRange().getValues();
 
@@ -65,7 +65,7 @@ var GateTransactionService = {
    * Retrieves real-time dashboard telemetry and current on-site headcount
    */
   getTelemetry: function(session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var logSheet = ss.getSheetByName('GATE_ENTRY_EXIT_LOG');
     var logs = logSheet.getDataRange().getValues();
 
@@ -118,7 +118,7 @@ var GateTransactionService = {
       return { success: false, error: 'MANDATORY_PO_OR_DC_REQUIRED: Consignment must possess PO Number or Delivery Challan.', status: 400 };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('MATERIAL_INWARD_REGISTER');
     var inwardId = 'INW-2026-' + ('0000' + sheet.getLastRow()).slice(-4);
 
@@ -147,7 +147,7 @@ var GateTransactionService = {
    * Creates a Returnable (RGP) or Non-Returnable (NRGP) gate pass
    */
   createGatePass: function(payload, session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('GATE_PASS_REGISTER');
     var prefix = payload.passType === 'NRGP' ? 'NRGP-2026-' : 'RGP-2026-';
     var passId = prefix + ('0000' + sheet.getLastRow()).slice(-4);
@@ -182,7 +182,7 @@ var GateTransactionService = {
       return { success: false, error: 'FORBIDDEN_APPROVAL_REQUIRES_MANAGER', status: 403 };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('GATE_PASS_REGISTER');
     var data = sheet.getDataRange().getValues();
 
@@ -203,7 +203,7 @@ var GateTransactionService = {
    * Dispatches physical exit; strictly disabled until approved
    */
   dispatchExitPass: function(payload, session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('GATE_PASS_REGISTER');
     var data = sheet.getDataRange().getValues();
 
@@ -225,7 +225,7 @@ var GateTransactionService = {
    * Generates instantaneous emergency muster headcount roster
    */
   getEmergencyMusterRoster: function(session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var logSheet = ss.getSheetByName('GATE_ENTRY_EXIT_LOG');
     var logs = logSheet.getDataRange().getValues();
 

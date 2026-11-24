@@ -6,6 +6,24 @@
  * with PBKDF2 cryptographic auth, CacheService session validation, and LockService mutex.
  */
 
+var HR_SPREADSHEET_ID_FALLBACK = '1so_aH05vVxiUJsIK6VS-n7BpGrHWNgn_5EK7RuA3cuw';
+
+function getHrSpreadsheet() {
+  var ssId = PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID') || HR_SPREADSHEET_ID_FALLBACK;
+  return SpreadsheetApp.openById(ssId);
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: 'BALSONS_HR_PAYROLL_ENGINE',
+    version: '1.1.0-PROD',
+    status: 'HEALTHY',
+    spreadsheetId: getHrSpreadsheet().getId(),
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   var lock = LockService.getScriptLock();
   try {
@@ -113,7 +131,7 @@ function validateSessionToken(token) {
   try {
     var session = JSON.parse(rawSession);
     // Verify user is still active in database
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var userSheet = ss.getSheetByName('USER_ACCESS');
     var users = userSheet.getDataRange().getValues();
     for (var i = 1; i < users.length; i++) {
@@ -142,7 +160,7 @@ function handleLogin(payload) {
     return { success: false, error: 'MISSING_CREDENTIALS', status: 400 };
   }
 
-  var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+  var ss = getHrSpreadsheet();
   var userSheet = ss.getSheetByName('USER_ACCESS');
   if (!userSheet) return { success: false, error: 'USER_ACCESS_MISSING', status: 500 };
 

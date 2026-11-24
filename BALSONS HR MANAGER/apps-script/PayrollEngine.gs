@@ -16,7 +16,7 @@ var PayrollEngine = {
       return { success: false, error: 'INVALID_PAY_PERIOD_FORMAT_YYYY_MM' };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     
     // Check if period is already locked
     var payRegSheet = ss.getSheetByName('PAYROLL_REGISTER');
@@ -233,7 +233,7 @@ var PayrollEngine = {
     var dry = this.calculateDryRun(payPeriod, session);
     if (!dry.success) return dry;
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var paySheet = ss.getSheetByName('PAYROLL_REGISTER');
     var advRecSheet = ss.getSheetByName('ADVANCE_RECOVERY');
     var advMasterSheet = ss.getSheetByName('ADVANCE_MASTER');

@@ -12,7 +12,7 @@ var EmployeeService = {
    * Retrieves all employees with role-based PII masking
    */
   getEmployees: function(filter, session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var sheet = ss.getSheetByName('EMPLOYEE_MASTER');
     if (!sheet) return { success: false, error: 'EMPLOYEE_MASTER_MISSING' };
 
@@ -86,7 +86,7 @@ var EmployeeService = {
       return { success: false, error: 'INVALID_WAGE_RATE_OR_CTC' };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var sheet = ss.getSheetByName('EMPLOYEE_MASTER');
 
     // Generate Atomic Mutex EmpID: EMP-2026-XXXX
@@ -145,7 +145,7 @@ var EmployeeService = {
   get360Dossier: function(empId, session) {
     if (!empId) return { success: false, error: 'EMPID_REQUIRED' };
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var sheet = ss.getSheetByName('EMPLOYEE_MASTER');
     var data = sheet.getDataRange().getValues();
     var profile = null;
@@ -226,7 +226,7 @@ var EmployeeService = {
       return { success: false, error: 'MISSING_ATTENDANCE_FIELDS' };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var sheet = ss.getSheetByName('ATTENDANCE_DAILY');
     var dailyId = 'ATT-' + payload.date + '-' + payload.empId;
 
@@ -252,7 +252,7 @@ var EmployeeService = {
       return { success: false, error: 'FORBIDDEN_INSUFFICIENT_ROLE', status: 403 };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('HR_SPREADSHEET_ID'));
+    var ss = getHrSpreadsheet();
     var sheet = ss.getSheetByName('ADVANCE_MASTER');
     var advId = 'ADV-2026-' + ('0000' + sheet.getLastRow()).slice(-4);
     var amount = Number(payload.totalAmount);

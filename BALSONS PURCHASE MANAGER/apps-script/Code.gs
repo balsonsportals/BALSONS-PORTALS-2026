@@ -6,6 +6,17 @@
 
 const PURCHASE_SPREADSHEET_ID = '1j0CExit4zoZy5iC-mJHFCbpqmOz8menZ7HGWh1fSGz4';
 
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: 'BALSONS_PURCHASE_COMMERCIAL_ENGINE',
+    version: '1.1.0-PROD',
+    status: 'HEALTHY',
+    spreadsheetId: PURCHASE_SPREADSHEET_ID,
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   try {

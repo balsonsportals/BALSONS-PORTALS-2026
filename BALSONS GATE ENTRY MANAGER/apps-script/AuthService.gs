@@ -13,7 +13,7 @@ var AuthService = {
       return { success: false, error: 'MISSING_CREDENTIALS', status: 400 };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('USER_MASTER');
     if (!sheet) return { success: false, error: 'USER_MASTER_MISSING', status: 500 };
 

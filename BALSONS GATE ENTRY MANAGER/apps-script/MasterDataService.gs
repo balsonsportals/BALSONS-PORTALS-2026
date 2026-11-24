@@ -6,7 +6,7 @@
 var MasterDataService = {
 
   getContractors: function(session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('CONTRACTOR_MASTER');
     if (!sheet) return { success: false, error: 'CONTRACTOR_MASTER_MISSING' };
 
@@ -29,7 +29,7 @@ var MasterDataService = {
   },
 
   getPersonnel: function(payload, session) {
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var sheet = ss.getSheetByName('PERSONNEL_MASTER');
     if (!sheet) return { success: false, error: 'PERSONNEL_MASTER_MISSING' };
 

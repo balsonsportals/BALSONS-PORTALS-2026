@@ -6,6 +6,17 @@
 
 const SAFETY_SPREADSHEET_ID = '1iAiqscEZtL0Cf4A9xIYbDNt2Fj_TWs1ebB1mZbhHXp0';
 
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: 'BALSONS_SAFETY_PTW_ENGINE',
+    version: '1.1.0-PROD',
+    status: 'HEALTHY',
+    spreadsheetId: SAFETY_SPREADSHEET_ID,
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   try {

@@ -6,6 +6,17 @@
 
 const STORE_SPREADSHEET_ID = '1M8lqdh_T3vaVW60tLmmvpkIRvZhiRJ6ATND40SuDND4';
 
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: 'BALSONS_STORE_RIGGING_ENGINE',
+    version: '1.1.0-PROD',
+    status: 'HEALTHY',
+    spreadsheetId: STORE_SPREADSHEET_ID,
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   try {

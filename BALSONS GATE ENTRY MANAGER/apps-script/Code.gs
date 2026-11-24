@@ -6,6 +6,24 @@
  * with 9-Discipline Automated Pre-Clearance, Turnstile Movement, and Material Inward/Passes.
  */
 
+var GATE_SPREADSHEET_ID_FALLBACK = '1WzxdGaGFUJ9QWW31F4PXXzNTRQif8ZLu0Dale-GB534';
+
+function getGateSpreadsheet() {
+  var ssId = PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID') || GATE_SPREADSHEET_ID_FALLBACK;
+  return SpreadsheetApp.openById(ssId);
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: 'BALSONS_GATE_ENTRY_ENGINE',
+    version: '1.1.0-PROD',
+    status: 'HEALTHY',
+    spreadsheetId: getGateSpreadsheet().getId(),
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   var lock = LockService.getScriptLock();
   try {

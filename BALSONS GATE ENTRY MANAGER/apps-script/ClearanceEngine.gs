@@ -19,7 +19,7 @@ var ClearanceEngine = {
 
     if (!subjectId) return { success: false, error: 'SUBJECT_ID_REQUIRED' };
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
 
     var disciplines = {
       IDENTITY_VALIDITY: { status: 'PASS', details: 'Valid ID on record' },
@@ -131,7 +131,7 @@ var ClearanceEngine = {
       return { success: false, error: 'JUSTIFICATION_REQUIRED_MIN_10_CHARS' };
     }
 
-    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('GATE_SPREADSHEET_ID'));
+    var ss = getGateSpreadsheet();
     var exSheet = ss.getSheetByName('EXCEPTION_LOG');
     var exId = 'EXC-2026-' + ('0000' + exSheet.getLastRow()).slice(-4);
     var expiry = new Date(Date.now() + 4 * 3600 * 1000).toISOString(); // 4 hours maximum
